@@ -6,12 +6,16 @@ using UnityEngine.UI;
 public class CreateItem2 : MonoBehaviour {
 
     public GameObject prefab;
-
+    public Text timeDisplayer;
     public Image img;
     public UnityEngine.UI.Button btn;
-    public float cooltime = 10.0f;
+    float cooltime = 300.0f;
     public bool disableOnStart = false;
-    float leftTime = 10.0f;
+    float leftTime = 300.0f;
+    private int sec;
+    private int sec_1;
+    private int sec_10;
+    private int min;
 
     
 
@@ -31,6 +35,11 @@ public class CreateItem2 : MonoBehaviour {
         if (leftTime > 0)
         {
             btn.enabled = false;
+            sec = (int)leftTime % 60;
+            sec_10 = (int)sec / 10;
+            sec_1 = (int)sec % 10;
+            min = (int)leftTime / 60;
+            timeDisplayer.text = "0"+ min + ":" + sec_10 + sec_1;
             leftTime -= Time.deltaTime;
             if (leftTime < 0)
             {

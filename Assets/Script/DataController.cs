@@ -14,7 +14,7 @@ public class DataController : MonoBehaviour {
 
             if (instance == null)
             {
-                GameObject container = new GameObject("DataContreoller");
+                GameObject container = new GameObject("DataController");
 
                 instance = container.AddComponent<DataController>();
             }

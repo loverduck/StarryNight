@@ -64,7 +64,7 @@ public class CreateItem : MonoBehaviour {
     public void AddEnergy() // 클릭 수 증가
     {
         energy += energyPerClick;
-        img.fillAmount = (float)energy / (float)energyMaxValue;
+        img.fillAmount = (float)energy / energyMaxValue;
         
     }
 
