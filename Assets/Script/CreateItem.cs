@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ public class CreateItem : MonoBehaviour {
     private int energyMaxValue = 100; // 에너지 충전 최대량
     public GameObject item; // 아이템
     public Image img;
-    public UnityEngine.UI.Button btn;
+    public Button btn;
 
     static int itemId;
 
@@ -46,7 +45,7 @@ public class CreateItem : MonoBehaviour {
         if (img == null)
             img = gameObject.GetComponent<Image>();
         if (btn == null)
-            btn = gameObject.GetComponent<UnityEngine.UI.Button>();
+            btn = gameObject.GetComponent<Button>();
         img.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
 
     }
