@@ -1,12 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RaycastTest : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        CameraController.focusOnItem = true;
-        Debug.Log("focusOnItem : " + CameraController.focusOnItem);
+        //CameraController.focusOnItem = true;
+        //Debug.Log("focusOnItem : " + CameraController.focusOnItem);
     }
 
     private void OnMouseDrag()
@@ -25,8 +26,8 @@ public class RaycastTest : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         GetComponent<BoxCollider2D>().isTrigger = false;
 
-        CameraController.focusOnItem = false;
-        Debug.Log("focusOnItem : " + CameraController.focusOnItem);
+        //CameraController.focusOnItem = false;
+        //Debug.Log("focusOnItem : " + CameraController.focusOnItem);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,20 +43,22 @@ public class RaycastTest : MonoBehaviour
 
             int key1 = myItemInfo.index;
             int key2 = collItemInfo.index;
-            int result = itemDic.FindCombine(key1, key2);
+            List<int> resultList = itemDic.FindCombine(key1, key2);
 
-            if (result != 0)
+            if (resultList != null)
             {
                 // 조합표에 있다면 충돌 당한 물체를 결과 재료로 바꾸어준다.
-                Debug.Log("result != 0");
+                //Debug.Log("result != 0");
 
-                ItemInfo findItemInfo = itemDic.FindItem(result);
+                // 조합 결과 개수를 얻어온다.
+                int resultNum = resultList.Count;
+
+                ItemInfo findItemInfo = itemDic.FindItem(resultList[Random.Range(0, resultNum)]);
 
                 myItemInfo.index = findItemInfo.index;
                 myItemInfo.mtName = findItemInfo.mtName;
+                myItemInfo.group = findItemInfo.group;
                 myItemInfo.grade = findItemInfo.grade;
-                myItemInfo.element = findItemInfo.element;
-                myItemInfo.getRoot = findItemInfo.getRoot;
                 myItemInfo.sellPrice = findItemInfo.sellPrice;
                 myItemInfo.description = findItemInfo.description;
                 myItemInfo.imagePath = findItemInfo.imagePath;
@@ -63,10 +66,10 @@ public class RaycastTest : MonoBehaviour
                 GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(itemDic.findDic[myItemInfo.index].imagePath);
 
                 // 충돌한 물체를 가지고 있는 재료 dictionary에서 삭제한다.
-                itemDic.DeleteItem(key2);
-                itemDic.DeleteItem(key1);
+                DataController.GetInstance().DeleteItem(key2);
+                DataController.GetInstance().DeleteItem(key1);
 
-                itemDic.InsertItem(key1, result);
+                DataController.GetInstance().InsertItem(key1);
 
                 // 조합 후 충돌한 물체를 파괴한다.
                 collItemInfo.checkDestroy = true;
