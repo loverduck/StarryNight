@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class RaycastTest : MonoBehaviour
 {
+    Vector3 start;
+
     private void OnMouseDown()
     {
         //CameraController.focusOnItem = true;
         //Debug.Log("focusOnItem : " + CameraController.focusOnItem);
+        start = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1);
     }
 
     private void OnMouseDrag()
@@ -28,6 +31,8 @@ public class RaycastTest : MonoBehaviour
 
         //CameraController.focusOnItem = false;
         //Debug.Log("focusOnItem : " + CameraController.focusOnItem);
+        if (Input.mousePosition.x > 950 || Input.mousePosition.x < 170 || Input.mousePosition.y > 1680 || Input.mousePosition.y < 600)
+            transform.position = Camera.main.ScreenToWorldPoint(start);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
