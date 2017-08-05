@@ -32,27 +32,19 @@ public class ItemDictionary : MonoBehaviour
     public Dictionary<int, ItemInfo> findDic;
 
     /// <summary>
-    /// NOTE: 현재 내가 소지하고 있는 재료 Dictionary
-    /// <para>-> key(int) : 게임 오브젝트를 구별하는 id</para>
-    /// <para>-> value(int) : 재료 기준표 인덱스</para>
-    /// </summary>
-    public Dictionary<int, int> haveDic;
-
-    /// <summary>
     /// NOTE : 재료 조합식 Dictionary
     /// <para>-> key(int) : material1 인덱스</para>
     /// <para>-> value(int) : material1에 해당하는 조합식 list</para>
     /// </summary>
-    public Dictionary<Tuple<int, int>, int> cbDic;
+    public Dictionary<Tuple<int, int>, List<int>> cbDic;
 
-    private void Awake()
+    private void Start()
     {
         DontDestroyOnLoad(this);
 
         // 두 Dictionary들을 초기화
         findDic = new Dictionary<int, ItemInfo>();
-        haveDic = new Dictionary<int, int>();
-        cbDic = new Dictionary<Tuple<int, int>, int>();
+        cbDic = new Dictionary<Tuple<int, int>, List<int>>();
 
         ReadDataFile("dataTable/combineTable", FILEINFO.COMBINETABLE);
         ReadDataFile("dataTable/itemTable", FILEINFO.ITEMTABLE);
@@ -72,27 +64,47 @@ public class ItemDictionary : MonoBehaviour
         for (int i = 0; i < lineListLen; i++)
         {
             string[] wordList = lineList[i].Split(',');
+
             switch (fileType)
             {
                 case FILEINFO.COMBINETABLE:
                     int material1 = Convert.ToInt32(wordList[0]);
                     int material2 = Convert.ToInt32(wordList[1]);
-                    int result = Convert.ToInt32(wordList[2]);
+                    int resultNum = Convert.ToInt32(wordList[2]);
+
+                    Tuple<int, int> tuple;
 
                     if (material1 != material2)
                     {
-                        cbDic[new Tuple<int, int>(material2, material1)] = result;
+                        tuple = new Tuple<int, int>(material2, material1);
+
+                        cbDic[tuple] = new List<int>();
+
+                        for (int j = 0; j < resultNum; j++)
+                        {
+                            cbDic[tuple].Add(Convert.ToInt32(wordList[3 + j]));
+                        }
                     }
 
-                    cbDic[new Tuple<int, int>(material1, material2)] = result;
-                    
+                    tuple = new Tuple<int, int>(material1, material2);
+
+                    cbDic[tuple] = new List<int>();
+
+                    for (int j = 0; j < resultNum; j++)
+                    {
+                        cbDic[tuple].Add(Convert.ToInt32(wordList[3 + j]));
+                    }
+
                     break;
                 case FILEINFO.ITEMTABLE:
                     int index = Convert.ToInt32(wordList[0]);
+                    int sellPrice = Convert.ToInt32(wordList[5]);
 
                     findDic[index] = gameObject.AddComponent<ItemInfo>();
+                    findDic[index].Init(index, wordList[1], wordList[2], wordList[3], sellPrice, wordList[4], "itemImg/item_" + index);
+                    
+                    DataController.GetInstance().haveDic[index] = 0;
 
-                    findDic[index].Init(0, index, wordList[1], Convert.ToInt32(wordList[2]), Convert.ToInt32(wordList[3]), Convert.ToInt32(wordList[4]), Convert.ToInt32(wordList[5]), wordList[6], "itemImg/item_" + index);
                     break;
                 case FILEINFO.SETITEMTABLE:
                     break;
@@ -100,35 +112,6 @@ public class ItemDictionary : MonoBehaviour
                     break;
             }
         }
-    }
-
-    /// <summary>
-    /// 아이템을 추가하는 함수
-    /// </summary>
-    /// <param name="key">추가하는 아이템의 key값</param>
-    /// <param name="value">추가하는 아이템의 value값</param>
-    public void InsertItem(int key, int value)
-    {
-        haveDic[key] = value;
-    }
-
-    /// <summary>
-    /// 아이템을 삭제하는 함수
-    /// </summary>
-    /// <param name="key">삭제할 아이템의 key값</param>
-    public void DeleteItem(int key)
-    {
-        haveDic.Remove(key);
-    }
-
-    /// <summary>
-    /// 현재 보유하고 있는 아이템을 보여주는 함수
-    /// </summary>
-    /// <param name="key">haveDic의 key값</param>
-    /// <returns></returns>
-    public bool CheckExistItem(int key)
-    {
-        return haveDic.ContainsKey(key);
     }
 
     /// <summary>
@@ -147,7 +130,7 @@ public class ItemDictionary : MonoBehaviour
     /// <param name="key1">재료1의 인덱스</param>
     /// <param name="key2">재료2의 인덱스</param>
     /// <returns>찾았다면 결과를, 아니라면 0을 반환</returns>
-    public int FindCombine(int key1, int key2)
+    public List<int> FindCombine(int key1, int key2)
     {
         Tuple<int, int> tuple = new Tuple<int, int>(key1, key2);
 
@@ -156,6 +139,6 @@ public class ItemDictionary : MonoBehaviour
             return cbDic[tuple];
         }
 
-        return 0;
+        return null;
     }
 }

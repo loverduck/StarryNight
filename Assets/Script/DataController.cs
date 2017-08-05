@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class DataController : MonoBehaviour {
-
+public class DataController : MonoBehaviour
+{
     private static DataController instance;
 
     public static DataController GetInstance()
@@ -15,32 +14,36 @@ public class DataController : MonoBehaviour {
             if (instance == null)
             {
                 GameObject container = new GameObject("DataController");
-
                 instance = container.AddComponent<DataController>();
             }
         }
+
         return instance;
     }
 
-    private int m_gold;
-    private int m_itemcount = 0;
-    private int m_itemlimit;
-    private int m_energyPerClick;
+    // 현재 보유 골드량, 현재 보유 아이템 개수, 아이템 개수 제한, 클릭당 올라가는 게이지 양
+    private int m_gold, m_itemcount, m_itemlimit, m_energyPerClick;
+
+    /// <summary>
+    /// NOTE: 현재 내가 소지하고 있는 재료 Dictionary
+    /// <para>-> key(int) : 게임 오브젝트를 구별하는 id</para>
+    /// <para>-> value(int) : 재료 기준표 인덱스</para>
+    /// </summary>
+    public Dictionary<int, int> haveDic;
 
     // 게임 초기화될 때 
     void Awake()
     {
+        DontDestroyOnLoad(this);
+
         // Key : Value로써 PlayerPrefs에 저장
-        m_gold = PlayerPrefs.GetInt("Gold");
-
-        // 1은 기본 지정 값
-        SetEnergyPerClick(20);
-        //m_energyPerClick = PlayerPrefs.GetInt("EnergyPerClick", 20);
-
+        m_gold = PlayerPrefs.GetInt("Gold", 0);
+        m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
         m_itemlimit = PlayerPrefs.GetInt("ItemLimit", 10);
+        m_energyPerClick = PlayerPrefs.GetInt("EnergyPerClick", 20);
 
+        haveDic = new Dictionary<int, int>();
     }
-
 
     /// <summary>
     /// gold 설정 함수
@@ -137,5 +140,34 @@ public class DataController : MonoBehaviour {
         SetEnergyPerClick(m_energyPerClick + newEnergyPerClick);
     }
 
-    
+    /// <summary>
+    /// 아이템을 추가하는 함수
+    /// </summary>
+    /// <param name="key">추가하는 아이템의 index</param>
+    /// <param name="value">추가하는 아이템의 개수</param>
+    public void InsertItem(int key)
+    {
+        int value = haveDic[key];
+        haveDic[key] += value;
+    }
+
+    /// <summary>
+    /// 아이템을 삭제하는 함수
+    /// </summary>
+    /// <param name="key">삭제할 아이템의 key값</param>
+    public void DeleteItem(int key)
+    {
+        int value = haveDic[key];
+        haveDic[key] -= value;
+    }
+
+    /// <summary>
+    /// 현재 보유하고 있는 아이템을 보여주는 함수
+    /// </summary>
+    /// <param name="key">haveDic의 key값</param>
+    /// <returns></returns>
+    public bool CheckExistItem(int key)
+    {
+        return haveDic.ContainsKey(key);
+    }
 }
