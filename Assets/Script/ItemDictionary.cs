@@ -24,6 +24,30 @@ public class ItemDictionary : MonoBehaviour
         SETITEMTABLE
     }
 
+    public int starNum
+    {
+        get;
+        private set;
+    }
+
+    public int materialNum
+    {
+        get;
+        private set;
+    }
+
+    public int combineNum
+    {
+        get;
+        private set;
+    }
+
+    public int setNum
+    {
+        get;
+        private set;
+    }    
+
     /// <summary>
     /// NOTE: 재료를 찾을 때 사용하는 Dictionary
     /// <para> -> key(int) : 재료 기준표 인덱스</para>
@@ -99,9 +123,28 @@ public class ItemDictionary : MonoBehaviour
                 case FILEINFO.ITEMTABLE:
                     int index = Convert.ToInt32(wordList[0]);
                     int sellPrice = Convert.ToInt32(wordList[5]);
+                    string group = wordList[2];
+
+                    switch (group)
+                    {
+                        case "별":
+                            starNum++;
+                            break;
+                        case "재료":
+                            materialNum++;
+                            break;
+                        case "조합 아이템":
+                            combineNum++;
+                            break;
+                        case "세트 아이템":
+                            setNum++;
+                            break;
+                        default:
+                            break;
+                    }
 
                     findDic[index] = gameObject.AddComponent<ItemInfo>();
-                    findDic[index].Init(index, wordList[1], wordList[2], wordList[3], sellPrice, wordList[4], "itemImg/item_" + index);
+                    findDic[index].Init(index, wordList[1], group, wordList[3], sellPrice, wordList[4], "itemImg/item_" + index);
                     
                     DataController.GetInstance().haveDic[index] = 0;
 

@@ -170,4 +170,14 @@ public class DataController : MonoBehaviour
     {
         return haveDic.ContainsKey(key);
     }
+
+    public int GetItemNum(int key)
+    {
+        if (CheckExistItem(key))
+        {
+            return haveDic[key];
+        }
+
+        return 0;
+    }
 }
