@@ -11,7 +11,6 @@ public class CreateItem2 : MonoBehaviour {
     public UnityEngine.UI.Button btn;
     float cooltime = 300.0f;
     public bool disableOnStart = false;
-    float leftTime = 300.0f;
     private int sec;
     private int sec_1;
     private int sec_10;
@@ -32,25 +31,25 @@ public class CreateItem2 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (leftTime > 0)
+        if (DataController.GetInstance().GetLeftTime() > 0)
         {
             btn.enabled = false;
-            sec = (int)leftTime % 60;
+            sec = (int)DataController.GetInstance().GetLeftTime() % 60;
             sec_10 = (int)sec / 10;
             sec_1 = (int)sec % 10;
-            min = (int)leftTime / 60;
+            min = (int)DataController.GetInstance().GetLeftTime() / 60;
             timeDisplayer.text = "0"+ min + ":" + sec_10 + sec_1;
-            leftTime -= Time.deltaTime;
-            if (leftTime < 0)
+            
+            if (DataController.GetInstance().GetLeftTime() < 0)
             {
-                leftTime = 0;
+                DataController.GetInstance().SetLeftTime(0);
                 if (btn)
                 {
                     btn.enabled = true;
                 }
                     
             }
-            float ratio = 1.0f - (leftTime / cooltime);
+            float ratio = 1.0f - (DataController.GetInstance().GetLeftTime() / cooltime);
             if (img)
                 img.fillAmount = ratio;
         }
@@ -58,7 +57,7 @@ public class CreateItem2 : MonoBehaviour {
 
     public bool CheckCooltime()
     {
-        if (leftTime > 0)
+        if (DataController.GetInstance().GetLeftTime() > 0)
             return false;
         else
             return true;
@@ -79,7 +78,7 @@ public class CreateItem2 : MonoBehaviour {
             item.GetComponent<BoxCollider2D>().isTrigger = false;
             //Instantiate(prefab, new Vector3(39, 720, 0), Quaternion.identity).transform.SetParent(GameObject.Find("Canvas").transform, false);
 
-            leftTime = cooltime;
+            DataController.GetInstance().SetLeftTime(cooltime);
             btn.enabled = false;
             
             DataController.GetInstance().AddItemCount();

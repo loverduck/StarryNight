@@ -21,8 +21,9 @@ public class DataController : MonoBehaviour
         return instance;
     }
 
-    // 현재 보유 골드량, 현재 보유 아이템 개수, 아이템 개수 제한, 클릭당 올라가는 게이지 양
-    private int m_gold, m_itemcount, m_itemlimit, m_energyPerClick;
+    // 현재 보유 골드량, 현재 보유 아이템 개수, 아이템 개수 제한, 클릭당 올라가는 게이지 양, 퀘스트 진행도(인덱스)
+    private int m_gold, m_itemcount, m_itemlimit, m_energyPerClick, m_questProcess;
+    private float m_leftTime;
 
     /// <summary>
     /// NOTE: 현재 내가 소지하고 있는 재료 Dictionary
@@ -41,8 +42,15 @@ public class DataController : MonoBehaviour
         m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
         m_itemlimit = PlayerPrefs.GetInt("ItemLimit", 10);
         m_energyPerClick = PlayerPrefs.GetInt("EnergyPerClick", 20);
+        m_questProcess = PlayerPrefs.GetInt("QuestProcess", 90102);
+        m_leftTime = PlayerPrefs.GetFloat("LeftTime", 300.0f);
 
         haveDic = new Dictionary<int, int>();
+    }
+
+    void Update()
+    {
+        m_leftTime -= Time.deltaTime;
     }
 
     /// <summary>
@@ -112,6 +120,7 @@ public class DataController : MonoBehaviour
         PlayerPrefs.SetInt("ItemLimit", m_itemlimit);
     }
 
+
     /// <summary>
     /// EnergyPerClick을 얻는 함수
     /// </summary>
@@ -169,5 +178,35 @@ public class DataController : MonoBehaviour
     public bool CheckExistItem(int key)
     {
         return haveDic.ContainsKey(key);
+    }
+
+    /// <summary>
+    /// 현재 보유하고 있는 아이템의 갯수를 보여주는 함수
+    /// </summary>
+    /// <param name="key">haveDic의 key값</param>
+    /// <returns></returns>
+    public int GetItemNum(int key)
+    {
+        if (CheckExistItem(key))
+        {
+            return haveDic[key];
+        }
+
+        return 0;
+    }
+
+    public int GetQuestProcess()
+    {
+        return m_questProcess;
+    }
+
+    public float GetLeftTime()
+    {
+        return m_leftTime;
+    }
+
+    public void SetLeftTime(float time)
+    {
+        m_leftTime = time;
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sheep : MonoBehaviour {
+public class Taurus : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

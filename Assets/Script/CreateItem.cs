@@ -67,7 +67,7 @@ public class CreateItem : MonoBehaviour
         btn.enabled = false;
         StartCoroutine(DecreaseEnergy());
     }
-
+    // 에너지 감소
     IEnumerator DecreaseEnergy()
     {
         while (img.fillAmount != 0)
@@ -83,13 +83,15 @@ public class CreateItem : MonoBehaviour
         yield return null;
     }
 
+    // item1maker 클릭 시
     public void OnClick()
     {
         AddEnergy();
         NewObject();
     }
 
-    private void NewObject() // 아이템 생성
+    // 아이템 생성
+    private void NewObject()
     {
         if (energy >= energyMaxValue)
         {
