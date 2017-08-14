@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/Aris.unity
     guid: 0281501b078900b4a85836620c155247
+  - enabled: 1
+    path: Assets/Scene/Taurus.unity
+    guid: de8df20af5cea1542ac4b9711f0d7d78

@@ -20,7 +20,9 @@ public class QuestInfo : MonoBehaviour {
 
     public int reward { get; set; }
 
-    public void Init(int _index, string _act, string _title, string _content, int _termsItem, int _termsCount, int _reward)
+    public int rewardCount { get; set; }
+
+    public void Init(int _index, string _act, string _title, string _content, int _termsItem, int _termsCount, int _reward, int _rewardCount)
     {
         index = _index;
         act = _act;
@@ -29,5 +31,6 @@ public class QuestInfo : MonoBehaviour {
         termsItem = _termsItem;
         termsCount = _termsCount;
         reward = _reward;
+        rewardCount = _rewardCount;
     }
 }

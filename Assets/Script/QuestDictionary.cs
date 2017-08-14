@@ -42,9 +42,10 @@ public class QuestDictionary : MonoBehaviour {
             int termsItem = Convert.ToInt32(wordList[4]);
             int termsCount = Convert.ToInt32(wordList[5]);
             int reward = Convert.ToInt32(wordList[6]);
+            int rewardCount = Convert.ToInt32(wordList[7]);
 
             findQuestDic[index] = gameObject.AddComponent<QuestInfo>();
-            findQuestDic[index].Init(index, wordList[1], wordList[2], wordList[3], termsItem, termsCount, reward);
+            findQuestDic[index].Init(index, wordList[1], wordList[2], wordList[3], termsItem, termsCount, reward, rewardCount);
         }
     }
 

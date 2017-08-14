@@ -5,16 +5,17 @@ using UnityEngine.UI;
 public class CreateItem : MonoBehaviour
 {
     private int energy = 0;  // 에너지 
-    private int energyPerClick = 20; // 클릭당 에너지 증가량
+    private int energyPerClick; // 클릭당 에너지 증가량
     private int energyMaxValue = 100; // 에너지 충전 최대량
     public GameObject item; // 아이템
-    public Image img;
+    public Image img_earthback;
     public Button btn;
 
     private ItemDictionary itemDic;
 
     private void Awake()
     {
+        energyPerClick = DataController.GetInstance().GetEnergyPerClick();
         itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
     }
 
@@ -38,13 +39,13 @@ public class CreateItem : MonoBehaviour
 
     void Start()
     {
-        if (img == null)
-            img = gameObject.GetComponent<Image>();
+        if (img_earthback == null)
+            img_earthback = GameObject.Find("EarthBack").GetComponent<Image>();
 
         if (btn == null)
             btn = gameObject.GetComponent<Button>();
 
-        img.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
+        img_earthback.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
     }
 
     /// <summary>
@@ -59,7 +60,7 @@ public class CreateItem : MonoBehaviour
     public void AddEnergy() // 클릭 수 증가
     {
         energy += energyPerClick;
-        img.fillAmount = (float)energy / energyMaxValue;
+        img_earthback.fillAmount = (float)energy / energyMaxValue;
     }
 
     public void ResetEnergy() // 클릭 수 초기화
@@ -70,11 +71,11 @@ public class CreateItem : MonoBehaviour
     // 에너지 감소
     IEnumerator DecreaseEnergy()
     {
-        while (img.fillAmount != 0)
+        while (img_earthback.fillAmount != 0)
         {
             yield return new WaitForSeconds(0.05f);
 
-            img.fillAmount -= 0.1f;
+            img_earthback.fillAmount -= 0.1f;
         }
 
         energy = 0;
