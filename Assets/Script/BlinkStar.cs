@@ -72,6 +72,7 @@ public class BlinkStar : MonoBehaviour
 
     public void OnClick()
     {
+        AudioManager.GetInstance().QuestStarSound();
         currentQuest = questDic.FindQuest(DataController.GetInstance().GetQuestProcess());
 
         int checkItemIndex = currentQuest.termsItem;

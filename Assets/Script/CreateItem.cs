@@ -97,6 +97,7 @@ public class CreateItem : MonoBehaviour
     // item1maker 클릭 시
     public void OnClick()
     {
+        AudioManager.GetInstance().ClickSound();
         AddEnergy();
         NewObject();
     }
@@ -138,6 +139,8 @@ public class CreateItem : MonoBehaviour
 
             DataController.GetInstance().AddItemCount();
             ResetEnergy();
+
+            AudioManager.GetInstance().ItemSound();
 
             //img.fillAmount = 0.0f;
         }

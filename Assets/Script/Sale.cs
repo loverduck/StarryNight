@@ -6,6 +6,7 @@ public class Sale : MonoBehaviour
     {
         if (col.tag == "Material")
         {
+            AudioManager.GetInstance().SaleSound();
             ItemInfo itemInfo = col.GetComponent<ItemInfo>();
 
             DataController.GetInstance().AddGold((ulong)itemInfo.sellPrice);

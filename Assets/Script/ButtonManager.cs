@@ -17,14 +17,17 @@ public class ButtonManager : MonoBehaviour {
 
     public void OnArisBtnClick()
     {
+        AudioManager.GetInstance().ActSound();
         SceneManager.LoadScene("Aris");
     }
 
     public void OnTaurusBtnClick()
     {
+
         // 퀘스트 인덱스 확인
         if ( 90104 < DataController.GetInstance().GetQuestProcess())
         {
+            AudioManager.GetInstance().ActSound();
             SceneManager.LoadScene("Taurus");
         }
     }
