@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Text;
 
 public class DataController : MonoBehaviour
 {
@@ -51,7 +53,7 @@ public class DataController : MonoBehaviour
         m_gold = PlayerPrefs.GetInt("Gold", 1000);
         m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
         m_questProcess = PlayerPrefs.GetInt("QuestProcess", 90117);
-        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 1.0f);
+        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 5.0f);
         m_leftTimer2 = PlayerPrefs.GetFloat("LeftTimer2", 300.0f);
         m_leftTimer3 = PlayerPrefs.GetFloat("LeftTimer3", 300.0f);
         m_energy = PlayerPrefs.GetInt("Energy", 0);
@@ -65,11 +67,58 @@ public class DataController : MonoBehaviour
         haveDic = new Dictionary<int, int>();
     }
 
+    void Start()
+    {
+        m_leftTimer1 -= TimeAfterLastPlay;
+        m_leftTimer2 -= TimeAfterLastPlay;
+        m_leftTimer3 -= TimeAfterLastPlay;
+
+        InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
+    }
+
     void Update()
     {
         m_leftTimer1 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer1", m_leftTimer1);
         m_leftTimer2 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer2", m_leftTimer2);
         m_leftTimer3 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
+    }
+
+    DateTime GetLastPlayDate()
+    {
+        if (!PlayerPrefs.HasKey("Time"))
+        {
+            return DateTime.Now;
+        }
+
+        string timeBinaryInString = PlayerPrefs.GetString("Time");
+        long timeBinaryInLong = Convert.ToInt64(timeBinaryInString);
+
+        return DateTime.FromBinary(timeBinaryInLong);
+    }
+
+    void UpdateLastPlayDate()
+    {
+        PlayerPrefs.SetString("Time", DateTime.Now.ToBinary().ToString());
+    }
+
+    private void OnApplicationQuit()
+    {
+        UpdateLastPlayDate();
+    }
+
+    public int TimeAfterLastPlay
+    {
+        get
+        {
+            DateTime currentTime = DateTime.Now;
+            DateTime lastTime = GetLastPlayDate();
+
+            int subTime = (int)currentTime.Subtract(lastTime).TotalSeconds;
+            return subTime;
+        }
     }
 
     /// <summary>
@@ -259,6 +308,7 @@ public class DataController : MonoBehaviour
     public void SetLeftTimer1(float time)
     {
         m_leftTimer1 = time;
+        PlayerPrefs.SetFloat("LeftTimer1", m_leftTimer1);
     }
 
     public float GetLeftTimer2()
@@ -269,6 +319,7 @@ public class DataController : MonoBehaviour
     public void SetLeftTimer2(float time)
     {
         m_leftTimer2 = time;
+        PlayerPrefs.SetFloat("LeftTimer2", m_leftTimer2);
     }
 
     public float GetLeftTimer3()
@@ -279,6 +330,7 @@ public class DataController : MonoBehaviour
     public void SetLeftTimer3(float time)
     {
         m_leftTimer3 = time;
+        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
     }
 
     public int GetMaxInvenLv()

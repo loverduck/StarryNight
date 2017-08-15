@@ -43,7 +43,7 @@ public class ItemTimer3 : MonoBehaviour {
             sec_10 = (int)sec / 10;
             sec_1 = (int)sec % 10;
             min = (int)DataController.GetInstance().GetLeftTimer3() / 60;
-            timeDisplayer.text = "0" + min + ":" + sec_10 + sec_1;
+            timeDisplayer.text = min + ":" + sec_10 + sec_1;
 
             if (DataController.GetInstance().GetLeftTimer3() < 0)
             {
@@ -60,6 +60,7 @@ public class ItemTimer3 : MonoBehaviour {
         }
         else
         {
+            timeDisplayer.text = "0:00";
             img.fillAmount = 1.0f;
             DataController.GetInstance().SetLeftTimer3(0);
             if (btn)

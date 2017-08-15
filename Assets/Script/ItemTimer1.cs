@@ -9,7 +9,7 @@ public class ItemTimer1 : MonoBehaviour {
     public Text timeDisplayer;
     public Image img;
     public UnityEngine.UI.Button btn;
-    float cooltime = 1.0f;
+    float cooltime = 5.0f;
     public bool disableOnStart = false;
     private int sec;
     private int sec_1;
@@ -43,7 +43,7 @@ public class ItemTimer1 : MonoBehaviour {
             sec_10 = (int)sec / 10;
             sec_1 = (int)sec % 10;
             min = (int)DataController.GetInstance().GetLeftTimer1() / 60;
-            timeDisplayer.text = "0" + min + ":" + sec_10 + sec_1;
+            timeDisplayer.text = min + ":" + sec_10 + sec_1;
 
             if (DataController.GetInstance().GetLeftTimer1() <= 0)
             {
@@ -61,6 +61,7 @@ public class ItemTimer1 : MonoBehaviour {
         }
         else
         {
+            timeDisplayer.text = "0:00";
             img.fillAmount = 1.0f;
             DataController.GetInstance().SetLeftTimer1(0);
             if (btn)
