@@ -10,12 +10,12 @@ public class RaycastTest : MonoBehaviour
     {
         //CameraController.focusOnItem = true;
         //Debug.Log("focusOnItem : " + CameraController.focusOnItem);
-        start = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1);
+        start = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7);
     }
 
     private void OnMouseDrag()
     {
-        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7));
     }
 
     private void OnMouseUp()

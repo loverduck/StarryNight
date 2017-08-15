@@ -104,7 +104,7 @@ public class ItemTimer2 : MonoBehaviour {
 
     private void CreateSetItem(int productID)
     {
-        GameObject setItem = Instantiate(prefab, new Vector3(-600, 772, -4), Quaternion.identity);
+        GameObject setItem = Instantiate(prefab, new Vector3(-600, 772, -3), Quaternion.identity);
 
         DataController.GetInstance().InsertItem(productID);
 
