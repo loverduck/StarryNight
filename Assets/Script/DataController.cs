@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using System;
-using System.Text;
 
 public class DataController : MonoBehaviour
 {
@@ -70,6 +68,9 @@ public class DataController : MonoBehaviour
 
         // Key : Value로써 PlayerPrefs에 저장
         m_gold = Convert.ToUInt64(PlayerPrefs.GetString("Gold", "0"));
+        m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
+        m_questProcess = PlayerPrefs.GetInt("QuestProcess", 90117);
+        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 5.0f);
         m_leftTimer2 = PlayerPrefs.GetFloat("LeftTimer2", 300.0f);
         m_leftTimer3 = PlayerPrefs.GetFloat("LeftTimer3", 300.0f);
         m_energy = PlayerPrefs.GetInt("Energy", 0);
@@ -85,29 +86,36 @@ public class DataController : MonoBehaviour
 
         haveDic = LoadGameData(haveDicPath) as Dictionary<int, int>;
 
-        if (haveDic != null)
+        if (haveDic == null)
         {
-            Debug.Log("haveDic Length is not 0");
-        }
-        else
-        {
-            Debug.Log("haveDic Length is 0");
-
             haveDic = new Dictionary<int, int>();
         }
 
         itemOpenList = LoadGameData(itemOpenListPath) as List<int>;
 
-        if (itemOpenList != null)
+        if (itemOpenList == null)
         {
-            Debug.Log("itemOpenList Length is not 0");
-        }
-        else
-        {
-            Debug.Log("itemOpenList Length is 0");
-
             itemOpenList = new List<int>();
         }
+    }
+
+    void Start()
+    {
+        m_leftTimer1 -= TimeAfterLastPlay;
+        m_leftTimer2 -= TimeAfterLastPlay;
+        m_leftTimer3 -= TimeAfterLastPlay;
+
+        InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
+    }
+
+    void Update()
+    {
+        m_leftTimer1 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer1", m_leftTimer1);
+        m_leftTimer2 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer2", m_leftTimer2);
+        m_leftTimer3 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
     }
 
     // 게임 데이터를 불러오는 함수
@@ -151,32 +159,6 @@ public class DataController : MonoBehaviour
         binFormmater.Serialize(mStream, data);
 
         return mStream.ToArray();
-    }
-
-    void Update()
-    {
-        m_leftTimer1 -= Time.deltaTime;
-        m_leftTimer2 -= Time.deltaTime;
-        m_leftTimer3 -= Time.deltaTime;
-    }
-
-    void Start()
-    {
-        m_leftTimer1 -= TimeAfterLastPlay;
-        m_leftTimer2 -= TimeAfterLastPlay;
-        m_leftTimer3 -= TimeAfterLastPlay;
-
-        InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
-    }
-
-    void Update()
-    {
-        m_leftTimer1 -= Time.deltaTime;
-        PlayerPrefs.SetFloat("LeftTimer1", m_leftTimer1);
-        m_leftTimer2 -= Time.deltaTime;
-        PlayerPrefs.SetFloat("LeftTimer2", m_leftTimer2);
-        m_leftTimer3 -= Time.deltaTime;
-        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
     }
 
     DateTime GetLastPlayDate()
@@ -283,24 +265,6 @@ public class DataController : MonoBehaviour
     public int GetInvenLv()
     {
         return invenLv;
-    }
-
-    public void UpgradeInvenLv()
-    {
-        invenLv += 1;
-        PlayerPrefs.SetInt("InvenLevel", invenLv);
-    }
-
-
-    public int GetEnergy()
-    {
-        return m_energy;
-    }
-
-    public void SetEnergy(int energy)
-    {
-        m_energy = energy;
-        PlayerPrefs.SetInt("Energy", m_energy);
     }
 
     public void UpgradeInvenLv()
@@ -454,7 +418,7 @@ public class DataController : MonoBehaviour
     public void SetLeftTimer3(float time)
     {
         m_leftTimer3 = time;
-        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3)
+        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
     }
 
     public int GetMaxInvenLv()

@@ -74,7 +74,7 @@ public class RaycastTest : MonoBehaviour
                 DataController.GetInstance().DeleteItem(key2);
                 DataController.GetInstance().DeleteItem(key1);
 
-                DataController.GetInstance().InsertItem(key1, 1);
+                DataController.GetInstance().InsertItem(myItemInfo.index, 1);
 
                 // 조합 후 충돌한 물체를 파괴한다.
                 collItemInfo.checkDestroy = true;

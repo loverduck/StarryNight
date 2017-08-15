@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 /// <summary>
 /// Player prefs extension. Used to add boolean funciton in PlayerPrefs
 /// </summary>
