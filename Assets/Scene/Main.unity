@@ -136,7 +136,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 232333223}
   m_Father: {fileID: 552007811}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -156,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ced56bc288a624eac67b1931181d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1278417764551826, guid: a1aea540554df4e4ebf33022bf0a80c1, type: 2}
+  prefab: {fileID: 1453670370652862, guid: 0d3c4969f22d1524db3ffea1d2e623e0, type: 2}
   timeDisplayer: {fileID: 232333224}
   img: {fileID: 0}
   btn: {fileID: 0}
@@ -1487,12 +1488,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 552007811}
-  m_RootOrder: 12
+  m_Father: {fileID: 3774373}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 336, y: 775}
+  m_AnchoredPosition: {x: 55, y: 0}
   m_SizeDelta: {x: 207.5, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &232333224
@@ -1923,7 +1924,7 @@ RectTransform:
   m_Children:
   - {fileID: 90452825}
   m_Father: {fileID: 552007811}
-  m_RootOrder: 14
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2335,16 +2336,16 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 410859577}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 552007811}
-  m_RootOrder: 10
+  m_Father: {fileID: 618962934}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -187, y: 775}
+  m_AnchoredPosition: {x: 32, y: 0}
   m_SizeDelta: {x: 207.5, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &410859579
@@ -3560,9 +3561,6 @@ RectTransform:
   - {fileID: 618962934}
   - {fileID: 1086528553}
   - {fileID: 3774373}
-  - {fileID: 410859578}
-  - {fileID: 776887711}
-  - {fileID: 232333223}
   - {fileID: 1184656860}
   - {fileID: 346259868}
   m_Father: {fileID: 1631531816}
@@ -3830,7 +3828,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 410859578}
   m_Father: {fileID: 552007811}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3850,7 +3849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bbae5aedf5cf8a4bb3beb681093da20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1278417764551826, guid: a1aea540554df4e4ebf33022bf0a80c1, type: 2}
+  prefab: {fileID: 1453670370652862, guid: 0d3c4969f22d1524db3ffea1d2e623e0, type: 2}
   timeDisplayer: {fileID: 410859579}
   img: {fileID: 0}
   btn: {fileID: 0}
@@ -5227,12 +5226,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 552007811}
-  m_RootOrder: 11
+  m_Father: {fileID: 1086528553}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 76, y: 775}
+  m_AnchoredPosition: {x: 45, y: 0}
   m_SizeDelta: {x: 207.5, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &776887712
@@ -6499,7 +6498,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 776887711}
   m_Father: {fileID: 552007811}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6519,7 +6519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf36dd41c228024986e401f05fd8c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1278417764551826, guid: a1aea540554df4e4ebf33022bf0a80c1, type: 2}
+  prefab: {fileID: 1453670370652862, guid: 0d3c4969f22d1524db3ffea1d2e623e0, type: 2}
   timeDisplayer: {fileID: 776887712}
   img: {fileID: 0}
   btn: {fileID: 0}
@@ -6898,7 +6898,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 552007811}
-  m_RootOrder: 13
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

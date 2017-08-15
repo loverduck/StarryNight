@@ -96,7 +96,7 @@ public class BlinkStar : MonoBehaviour {
         }
 
         // 조건 아이템의 갯수 확인
-        if (checkItemCount == currentItemNum)
+        if (checkItemCount <= currentItemNum)
         {
             if (currentQuest.reward == 9999)
             {

@@ -16,6 +16,7 @@ public class UpgradePopup : MonoBehaviour {
 
     public void EnterUpgrade()
     {
+        transform.SetAsLastSibling();
         upgrade.SetActive(true);
     }
 

@@ -45,22 +45,17 @@ public class CreateItem : MonoBehaviour
         if (btn == null)
             btn = gameObject.GetComponent<Button>();
 
-        img_earthback.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
+        energy = DataController.GetInstance().GetEnergy();
+
+        img_earthback.fillAmount = (float)energy / energyMaxValue;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public float GetEnergy()
-    {
-        return energy;
-    }
 
     public void AddEnergy() // 클릭 수 증가
     {
         energy += energyPerClick;
         img_earthback.fillAmount = (float)energy / energyMaxValue;
+        DataController.GetInstance().SetEnergy(energy);
     }
 
     public void ResetEnergy() // 클릭 수 초기화
@@ -79,6 +74,7 @@ public class CreateItem : MonoBehaviour
         }
 
         energy = 0;
+        DataController.GetInstance().SetEnergy(energy);
         btn.enabled = true;
 
         yield return null;

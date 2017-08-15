@@ -103,7 +103,7 @@ public class UpgradeManager : MonoBehaviour {
     public void EnergyPerClickUpgrade()
     {
         // 골드 빼고
-        DataController.GetInstance().SubGold(upgradeDic.FindUpgrade(50002).cost[currentInvenLv]);
+        DataController.GetInstance().SubGold(upgradeDic.FindUpgrade(50002).cost[currentPerClickLv]);
         // 클릭 당 게이지 증가시켜주고
         DataController.GetInstance().UpgradeEnergyPerClickLv();
     }

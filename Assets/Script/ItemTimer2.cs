@@ -16,7 +16,12 @@ public class ItemTimer2 : MonoBehaviour {
     private int sec_10;
     private int min;
 
+    private ItemDictionary itemDic;
 
+    private void Awake()
+    {
+        itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
+    }
 
     void Start()
     {
@@ -51,6 +56,15 @@ public class ItemTimer2 : MonoBehaviour {
             if (img)
                 img.fillAmount = ratio;
         }
+        else
+        {
+            img.fillAmount = 1.0f;
+            DataController.GetInstance().SetLeftTimer2(0);
+            if (btn)
+            {
+                btn.enabled = true;
+            }
+        }
     }
 
     public bool CheckCooltime()
@@ -72,9 +86,14 @@ public class ItemTimer2 : MonoBehaviour {
                 return;
             }
 
-            GameObject item = Instantiate(prefab, new Vector3(-621, 772, -4), Quaternion.identity);
-            item.GetComponent<BoxCollider2D>().isTrigger = false;
-            //Instantiate(prefab, new Vector3(39, 720, 0), Quaternion.identity).transform.SetParent(GameObject.Find("Canvas").transform, false);
+            int id = Random.Range(4001, 4059);
+
+            while (id % 5 == 0)
+            {
+                id = Random.Range(4001, 4059);
+            }
+
+            CreateSetItem(id);
 
             DataController.GetInstance().SetLeftTimer2(cooltime);
             btn.enabled = false;
@@ -83,4 +102,24 @@ public class ItemTimer2 : MonoBehaviour {
         }
     }
 
+    private void CreateSetItem(int productID)
+    {
+        GameObject setItem = Instantiate(prefab, new Vector3(-600, 772, -4), Quaternion.identity);
+
+        DataController.GetInstance().InsertItem(productID);
+
+        ItemInfo itemInfo = setItem.GetComponent<ItemInfo>();
+        ItemInfo findItemInfo = itemDic.findDic[productID];
+
+        itemInfo.index = productID;
+        itemInfo.mtName = findItemInfo.mtName;
+        itemInfo.group = findItemInfo.group;
+        itemInfo.grade = findItemInfo.grade;
+        itemInfo.sellPrice = findItemInfo.sellPrice;
+        itemInfo.description = findItemInfo.description;
+        itemInfo.imagePath = findItemInfo.imagePath;
+
+        setItem.GetComponent<BoxCollider2D>().isTrigger = false;
+        setItem.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(itemDic.findDic[productID].imagePath);
+    }
 }
