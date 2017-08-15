@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class BlinkStar : MonoBehaviour
 {
-
     public int questIndex;
 
     private Button btn;
@@ -19,7 +18,7 @@ public class BlinkStar : MonoBehaviour
     private UpgradeDictionary upgradeDic;
 
     private QuestInfo currentQuest;
-
+    
     private void Awake()
     {
         questDic = GameObject.FindWithTag("DataController").GetComponent<QuestDictionary>();
@@ -28,8 +27,6 @@ public class BlinkStar : MonoBehaviour
 
         btn = gameObject.GetComponent<Button>();
         btnImg = gameObject.GetComponent<Image>();
-
-
 
         //btnImg = Resources.Load<Image>("questImg/quest_uncomplete");
         btn.enabled = false;
@@ -51,6 +48,7 @@ public class BlinkStar : MonoBehaviour
         {
             btn.enabled = true;
             btnImg.sprite = Resources.Load<Sprite>("questImg/quest_complete");
+
             if (questIndex == DataController.GetInstance().GetQuestProcess())
             {
                 btnImg.sprite = Resources.Load<Sprite>("questImg/quest_ongoing");
@@ -124,7 +122,6 @@ public class BlinkStar : MonoBehaviour
         }
 
         // 퀘스트 정보 출력
-
         GameObject.Find("Name Displayer").GetComponent<Text>().text = btn.GetComponent<QuestInfo>().title;
 
         if (questIndex == 90101)
@@ -179,7 +176,6 @@ public class BlinkStar : MonoBehaviour
             {
                 GameObject.Find("Progress Displayer").GetComponent<Text>().text = "재료 아이템 " + questItemNum + "/" + btn.GetComponent<QuestInfo>().termsCount;
             }
-
         }
         else if (questIndex == 90104)
         {
@@ -199,7 +195,6 @@ public class BlinkStar : MonoBehaviour
             {
                 GameObject.Find("Progress Displayer").GetComponent<Text>().text = "레벨 1 조합 아이템 " + questItemNum + "/" + btn.GetComponent<QuestInfo>().termsCount;
             }
-
         }
         else
         {
@@ -257,7 +252,6 @@ public class BlinkStar : MonoBehaviour
         {
             GameObject.Find("Reward Displayer").GetComponent<Text>().text = itemDic.findDic[btn.GetComponent<QuestInfo>().reward].mtName + " " + btn.GetComponent<QuestInfo>().rewardCount;
         }
-
     }
 
     IEnumerator Blink()

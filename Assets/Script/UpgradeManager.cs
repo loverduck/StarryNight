@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeManager : MonoBehaviour {
-
+public class UpgradeManager : MonoBehaviour
+{
     private UpgradeDictionary upgradeDic;
 
     private GameObject invenUnlock;
@@ -96,6 +96,7 @@ public class UpgradeManager : MonoBehaviour {
     {
         // 골드 빼고
         DataController.GetInstance().SubGold((ulong)upgradeDic.FindUpgrade(50001).cost[currentInvenLv]);
+
         // 공간 늘려주고
         DataController.GetInstance().UpgradeInvenLv();
     }
@@ -103,7 +104,8 @@ public class UpgradeManager : MonoBehaviour {
     public void EnergyPerClickUpgrade()
     {
         // 골드 빼고
-        DataController.GetInstance().SubGold((ulong)upgradeDic.FindUpgrade(50002).cost[currentInvenLv]);
+        DataController.GetInstance().SubGold((ulong)upgradeDic.FindUpgrade(50002).cost[currentPerClickLv]);
+
         // 클릭 당 게이지 증가시켜주고
         DataController.GetInstance().UpgradeEnergyPerClickLv();
     }

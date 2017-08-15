@@ -3,27 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemTimer2 : MonoBehaviour {
-
+public class ItemTimer2 : MonoBehaviour
+{
     public GameObject prefab;
     public Text timeDisplayer;
     public Image img;
-    public UnityEngine.UI.Button btn;
+    public Button btn;
     float cooltime = 300.0f;
     public bool disableOnStart = false;
     private int sec;
     private int sec_1;
     private int sec_10;
     private int min;
+    private ItemDictionary itemDic;
 
+    private void Awake()
+    {
+        itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
+    }
 
-
-    void Start()
+    private void Start()
     {
         if (img == null)
             img = gameObject.GetComponent<Image>();
         if (btn == null)
-            btn = gameObject.GetComponent<UnityEngine.UI.Button>();
+            btn = gameObject.GetComponent<Button>();
     }
 
     // Update is called once per frame
@@ -51,6 +55,15 @@ public class ItemTimer2 : MonoBehaviour {
             if (img)
                 img.fillAmount = ratio;
         }
+        else
+        {
+            img.fillAmount = 1.0f;
+            DataController.GetInstance().SetLeftTimer2(0);
+            if (btn)
+            {
+                btn.enabled = true;
+            }
+        }
     }
 
     public bool CheckCooltime()
@@ -63,7 +76,6 @@ public class ItemTimer2 : MonoBehaviour {
 
     public void ResetCooltime()
     {
-
         if (btn)
         {
             if (DataController.GetInstance().GetItemCount() >= DataController.GetInstance().GetItemLimit()) // 아이템 갯수 제한
@@ -72,9 +84,14 @@ public class ItemTimer2 : MonoBehaviour {
                 return;
             }
 
-            GameObject item = Instantiate(prefab, new Vector3(-621, 772, -4), Quaternion.identity);
-            item.GetComponent<BoxCollider2D>().isTrigger = false;
-            //Instantiate(prefab, new Vector3(39, 720, 0), Quaternion.identity).transform.SetParent(GameObject.Find("Canvas").transform, false);
+            int id = Random.Range(4001, 4059);
+
+            while (id % 5 == 0)
+            {
+                id = Random.Range(4001, 4059);
+            }
+
+            CreateSetItem(id);
 
             DataController.GetInstance().SetLeftTimer2(cooltime);
             btn.enabled = false;
@@ -83,4 +100,24 @@ public class ItemTimer2 : MonoBehaviour {
         }
     }
 
+    private void CreateSetItem(int productID)
+    {
+        GameObject setItem = Instantiate(prefab, new Vector3(-600, 772, -4), Quaternion.identity);
+
+        DataController.GetInstance().InsertItem(productID, 1);
+
+        ItemInfo itemInfo = setItem.GetComponent<ItemInfo>();
+        ItemInfo findItemInfo = itemDic.findDic[productID];
+
+        itemInfo.index = productID;
+        itemInfo.mtName = findItemInfo.mtName;
+        itemInfo.group = findItemInfo.group;
+        itemInfo.grade = findItemInfo.grade;
+        itemInfo.sellPrice = findItemInfo.sellPrice;
+        itemInfo.description = findItemInfo.description;
+        itemInfo.imagePath = findItemInfo.imagePath;
+
+        setItem.GetComponent<BoxCollider2D>().isTrigger = false;
+        setItem.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(itemDic.findDic[productID].imagePath);
+    }
 }

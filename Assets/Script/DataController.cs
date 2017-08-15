@@ -10,7 +10,7 @@ public class DataController : MonoBehaviour
     private ulong m_gold;
     
     // 현재 보유 아이템 개수, 퀘스트 진행도(인덱스)
-    private int m_itemcount, m_questProcess;
+    private int m_itemcount, m_questProcess, m_energy;
 
     private float m_leftTimer1, m_leftTimer2, m_leftTimer3;
 
@@ -58,7 +58,7 @@ public class DataController : MonoBehaviour
 
         return instance;
     }
-
+    
     // 게임 초기화될 때 
     void Awake()
     {
@@ -70,9 +70,10 @@ public class DataController : MonoBehaviour
         m_gold = Convert.ToUInt64(PlayerPrefs.GetString("Gold", "0"));
         m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
         m_questProcess = PlayerPrefs.GetInt("QuestProcess", 90117);
-        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 300.0f);
+        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 1.0f);
         m_leftTimer2 = PlayerPrefs.GetFloat("LeftTimer2", 300.0f);
         m_leftTimer3 = PlayerPrefs.GetFloat("LeftTimer3", 300.0f);
+        m_energy = PlayerPrefs.GetInt("Energy", 0);
 
         invenLv = PlayerPrefs.GetInt("InvenLevel", 0);
         energyPerClickLv = PlayerPrefs.GetInt("EnergyPerClickLevel", 0);
@@ -204,13 +205,13 @@ public class DataController : MonoBehaviour
     public void AddItemCount()
     {
         m_itemcount += 1;
-        PlayerPrefs.GetInt("ItemCount", m_itemcount);
+        PlayerPrefs.SetInt("ItemCount", m_itemcount);
     }
 
     public void SubItemCount()
     {
         m_itemcount -= 1;
-        PlayerPrefs.GetInt("ItemCount", m_itemcount);
+        PlayerPrefs.SetInt("ItemCount", m_itemcount);
     }
 
     // item 최대 개수 가져오기 
@@ -234,7 +235,18 @@ public class DataController : MonoBehaviour
     public void UpgradeInvenLv()
     {
         invenLv += 1;
-        PlayerPrefs.GetInt("InvenLevel", invenLv);
+        PlayerPrefs.SetInt("InvenLevel", invenLv);
+    }
+
+    public int GetEnergy()
+    {
+        return m_energy;
+    }
+
+    public void SetEnergy(int energy)
+    {
+        m_energy = energy;
+        PlayerPrefs.SetInt("Energy", m_energy);
     }
     
     /// <summary>
@@ -254,9 +266,9 @@ public class DataController : MonoBehaviour
     public void UpgradeEnergyPerClickLv()
     {
         energyPerClickLv += 1;
-        PlayerPrefs.GetInt("EnergyPerClickLevel", energyPerClickLv);
+        PlayerPrefs.SetInt("EnergyPerClickLevel", energyPerClickLv);
     }
-
+    
     /// <summary>
     /// 아이템을 추가하는 함수
     /// </summary>
@@ -338,11 +350,11 @@ public class DataController : MonoBehaviour
     public void NextQuest()
     {
         m_questProcess += 1;
-        PlayerPrefs.GetInt("QuestProcess", m_questProcess);
+        PlayerPrefs.SetInt("QuestProcess", m_questProcess);
     }
 
     public float GetLeftTimer1()
-    {
+    { 
         return m_leftTimer1;
     }
 
@@ -379,7 +391,7 @@ public class DataController : MonoBehaviour
     public void SetMaxInvenLv()
     {
         invenMaxLv += 1;
-        PlayerPrefs.GetInt("InvenMaxLevel", invenMaxLv);
+        PlayerPrefs.SetInt("InvenMaxLevel", invenMaxLv);
     }
 
     public int GetMaxPerClickLv()
@@ -390,7 +402,7 @@ public class DataController : MonoBehaviour
     public void SetMaxPerClickLv()
     {
         energyPerClickMaxLv += 1;
-        PlayerPrefs.GetInt("EnergyPerClickMaxLevel", energyPerClickMaxLv);
+        PlayerPrefs.SetInt("EnergyPerClickMaxLevel", energyPerClickMaxLv);
     }
 
     // 업그레이드 인덱스로 현재 업그레이드 레벨 찾기
