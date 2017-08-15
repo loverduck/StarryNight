@@ -27,10 +27,9 @@ public class ItemTimer3 : MonoBehaviour
     {
         if (img == null)
             img = gameObject.GetComponent<Image>();
+
         if (btn == null)
             btn = gameObject.GetComponent<UnityEngine.UI.Button>();
-        //if (disableOnStart)
-        //    ResetCooltime();
     }
 
     // Update is called once per frame
@@ -43,7 +42,7 @@ public class ItemTimer3 : MonoBehaviour
             sec_10 = (int)sec / 10;
             sec_1 = (int)sec % 10;
             min = (int)DataController.GetInstance().GetLeftTimer3() / 60;
-            timeDisplayer.text = "0" + min + ":" + sec_10 + sec_1;
+            timeDisplayer.text = min + ":" + sec_10 + sec_1;
 
             if (DataController.GetInstance().GetLeftTimer3() < 0)
             {
@@ -60,6 +59,7 @@ public class ItemTimer3 : MonoBehaviour
         }
         else
         {
+            timeDisplayer.text = "0:00";
             img.fillAmount = 1.0f;
             DataController.GetInstance().SetLeftTimer3(0);
             if (btn)
@@ -79,7 +79,6 @@ public class ItemTimer3 : MonoBehaviour
 
     public void ResetCooltime()
     {
-
         if (btn)
         {
             if (DataController.GetInstance().GetItemCount() >= DataController.GetInstance().GetItemLimit()) // 아이템 갯수 제한
@@ -106,7 +105,7 @@ public class ItemTimer3 : MonoBehaviour
 
     private void CreateSetItem(int productID)
     {
-        GameObject setItem = Instantiate(prefab, new Vector3(-580, 772, -4), Quaternion.identity);
+        GameObject setItem = Instantiate(prefab, new Vector3(-580, 772, -3), Quaternion.identity);
 
         DataController.GetInstance().InsertItem(productID, 1);
 

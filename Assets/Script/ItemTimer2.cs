@@ -26,6 +26,7 @@ public class ItemTimer2 : MonoBehaviour
     {
         if (img == null)
             img = gameObject.GetComponent<Image>();
+
         if (btn == null)
             btn = gameObject.GetComponent<Button>();
     }
@@ -40,7 +41,7 @@ public class ItemTimer2 : MonoBehaviour
             sec_10 = (int)sec / 10;
             sec_1 = (int)sec % 10;
             min = (int)DataController.GetInstance().GetLeftTimer2() / 60;
-            timeDisplayer.text = "0" + min + ":" + sec_10 + sec_1;
+            timeDisplayer.text = min + ":" + sec_10 + sec_1;
 
             if (DataController.GetInstance().GetLeftTimer2() < 0)
             {
@@ -57,6 +58,7 @@ public class ItemTimer2 : MonoBehaviour
         }
         else
         {
+            timeDisplayer.text = "0:00";
             img.fillAmount = 1.0f;
             DataController.GetInstance().SetLeftTimer2(0);
             if (btn)
@@ -102,7 +104,7 @@ public class ItemTimer2 : MonoBehaviour
 
     private void CreateSetItem(int productID)
     {
-        GameObject setItem = Instantiate(prefab, new Vector3(-600, 772, -4), Quaternion.identity);
+        GameObject setItem = Instantiate(prefab, new Vector3(-600, 772, -3), Quaternion.identity);
 
         DataController.GetInstance().InsertItem(productID, 1);
 

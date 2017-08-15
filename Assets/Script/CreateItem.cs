@@ -45,7 +45,7 @@ public class CreateItem : MonoBehaviour
 
         if (btn == null)
             btn = gameObject.GetComponent<Button>();
-        
+
         img_earthback.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
 
         foreach (KeyValuePair<int, int> entry in DataController.GetInstance().haveDic)
@@ -145,7 +145,7 @@ public class CreateItem : MonoBehaviour
     public void GenerateItem(int productID, bool isNew)
     {
         //Instantiate(stick, new Vector3(-213, -396, 0), Quaternion.identity).transform.SetParent(GameObject.Find("Canvas").transform, false); // canvas 자식으로 상속해서 prifab생성
-        GameObject newItem = Instantiate(item, new Vector3(-758, -284, -4), Quaternion.identity);
+        GameObject newItem = Instantiate(item, new Vector3(-758, -284, -3), Quaternion.identity);
 
         // 현재 보유하고 있는 재료를 관리하는 Dictionary에 방금 생성한 item을 넣어준다.
         if (isNew)

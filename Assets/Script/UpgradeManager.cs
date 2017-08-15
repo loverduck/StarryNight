@@ -89,7 +89,6 @@ public class UpgradeManager : MonoBehaviour
 
         energyPerClickUp_Displayer.text = DataController.GetInstance().GetEnergyPerClick() + " -> " + nextClickValue;
         energyPerClickUpCost_Displayer.text = upgradeDic.FindUpgrade(50002).cost[currentPerClickLv] + "원";
-
     }
 
     public void InvenUpgrade()

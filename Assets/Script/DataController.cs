@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using System;
+using System.Text;
 
 public class DataController : MonoBehaviour
 {
     // 현재 보유 골드량
     private ulong m_gold;
-    
+
     // 현재 보유 아이템 개수, 퀘스트 진행도(인덱스)
     private int m_itemcount, m_questProcess, m_energy;
 
@@ -25,7 +27,7 @@ public class DataController : MonoBehaviour
 
     // itemOpenList 정보 저장 경로
     public string itemOpenListPath { get; private set; }
-    
+
     private UpgradeDictionary upgradeDic;
 
     /// <summary>
@@ -58,7 +60,7 @@ public class DataController : MonoBehaviour
 
         return instance;
     }
-    
+
     // 게임 초기화될 때 
     void Awake()
     {
@@ -68,9 +70,6 @@ public class DataController : MonoBehaviour
 
         // Key : Value로써 PlayerPrefs에 저장
         m_gold = Convert.ToUInt64(PlayerPrefs.GetString("Gold", "0"));
-        m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
-        m_questProcess = PlayerPrefs.GetInt("QuestProcess", 90117);
-        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 1.0f);
         m_leftTimer2 = PlayerPrefs.GetFloat("LeftTimer2", 300.0f);
         m_leftTimer3 = PlayerPrefs.GetFloat("LeftTimer3", 300.0f);
         m_energy = PlayerPrefs.GetInt("Energy", 0);
@@ -80,7 +79,7 @@ public class DataController : MonoBehaviour
 
         invenMaxLv = PlayerPrefs.GetInt("InvenMaxLevel", 20);
         energyPerClickMaxLv = PlayerPrefs.GetInt("EnergyPerClickMaxLevel", 20);
-        
+
         haveDicPath = "/FileData/haveDic.txt";
         itemOpenListPath = "/FileData/itemOpenList.txt";
 
@@ -161,6 +160,60 @@ public class DataController : MonoBehaviour
         m_leftTimer3 -= Time.deltaTime;
     }
 
+    void Start()
+    {
+        m_leftTimer1 -= TimeAfterLastPlay;
+        m_leftTimer2 -= TimeAfterLastPlay;
+        m_leftTimer3 -= TimeAfterLastPlay;
+
+        InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
+    }
+
+    void Update()
+    {
+        m_leftTimer1 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer1", m_leftTimer1);
+        m_leftTimer2 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer2", m_leftTimer2);
+        m_leftTimer3 -= Time.deltaTime;
+        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
+    }
+
+    DateTime GetLastPlayDate()
+    {
+        if (!PlayerPrefs.HasKey("Time"))
+        {
+            return DateTime.Now;
+        }
+
+        string timeBinaryInString = PlayerPrefs.GetString("Time");
+        long timeBinaryInLong = Convert.ToInt64(timeBinaryInString);
+
+        return DateTime.FromBinary(timeBinaryInLong);
+    }
+
+    void UpdateLastPlayDate()
+    {
+        PlayerPrefs.SetString("Time", DateTime.Now.ToBinary().ToString());
+    }
+
+    private void OnApplicationQuit()
+    {
+        UpdateLastPlayDate();
+    }
+
+    public int TimeAfterLastPlay
+    {
+        get
+        {
+            DateTime currentTime = DateTime.Now;
+            DateTime lastTime = GetLastPlayDate();
+
+            int subTime = (int)currentTime.Subtract(lastTime).TotalSeconds;
+            return subTime;
+        }
+    }
+
     /// <summary>
     /// gold 설정 함수
     /// </summary>
@@ -238,6 +291,7 @@ public class DataController : MonoBehaviour
         PlayerPrefs.SetInt("InvenLevel", invenLv);
     }
 
+
     public int GetEnergy()
     {
         return m_energy;
@@ -248,7 +302,24 @@ public class DataController : MonoBehaviour
         m_energy = energy;
         PlayerPrefs.SetInt("Energy", m_energy);
     }
-    
+
+    public void UpgradeInvenLv()
+    {
+        invenLv += 1;
+        PlayerPrefs.SetInt("InvenLevel", invenLv);
+    }
+
+    public int GetEnergy()
+    {
+        return m_energy;
+    }
+
+    public void SetEnergy(int energy)
+    {
+        m_energy = energy;
+        PlayerPrefs.SetInt("Energy", m_energy);
+    }
+
     /// <summary>
     /// EnergyPerClick을 얻는 함수
     /// </summary>
@@ -268,7 +339,7 @@ public class DataController : MonoBehaviour
         energyPerClickLv += 1;
         PlayerPrefs.SetInt("EnergyPerClickLevel", energyPerClickLv);
     }
-    
+
     /// <summary>
     /// 아이템을 추가하는 함수
     /// </summary>
@@ -288,7 +359,7 @@ public class DataController : MonoBehaviour
         {
             haveDic[key] += addNum;
         }
-        
+
         SaveGameData(haveDic, haveDicPath);
 
         //Debug.Log("InsertItem - haveDic DataSerialize");
@@ -354,13 +425,14 @@ public class DataController : MonoBehaviour
     }
 
     public float GetLeftTimer1()
-    { 
+    {
         return m_leftTimer1;
     }
 
     public void SetLeftTimer1(float time)
     {
         m_leftTimer1 = time;
+        PlayerPrefs.SetFloat("LeftTimer1", m_leftTimer1);
     }
 
     public float GetLeftTimer2()
@@ -371,6 +443,7 @@ public class DataController : MonoBehaviour
     public void SetLeftTimer2(float time)
     {
         m_leftTimer2 = time;
+        PlayerPrefs.SetFloat("LeftTimer2", m_leftTimer2);
     }
 
     public float GetLeftTimer3()
@@ -381,6 +454,7 @@ public class DataController : MonoBehaviour
     public void SetLeftTimer3(float time)
     {
         m_leftTimer3 = time;
+        PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3)
     }
 
     public int GetMaxInvenLv()

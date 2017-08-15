@@ -18,7 +18,7 @@ public class BlinkStar : MonoBehaviour
     private UpgradeDictionary upgradeDic;
 
     private QuestInfo currentQuest;
-    
+
     private void Awake()
     {
         questDic = GameObject.FindWithTag("DataController").GetComponent<QuestDictionary>();
@@ -27,8 +27,6 @@ public class BlinkStar : MonoBehaviour
 
         btn = gameObject.GetComponent<Button>();
         btnImg = gameObject.GetComponent<Image>();
-
-        //btnImg = Resources.Load<Image>("questImg/quest_uncomplete");
         btn.enabled = false;
 
         btnColor_d.a = 0;
@@ -95,7 +93,7 @@ public class BlinkStar : MonoBehaviour
         }
 
         // 조건 아이템의 갯수 확인
-        if (checkItemCount == currentItemNum)
+        if (checkItemCount <= currentItemNum)
         {
             if (currentQuest.reward == 9999)
             {
@@ -107,6 +105,7 @@ public class BlinkStar : MonoBehaviour
                 {
                     DataController.GetInstance().SubGold((ulong)currentQuest.termsCount);
                 }
+
                 DataController.GetInstance().SetMaxUpgradeLevel(currentQuest.reward);
             }
             else
@@ -116,8 +115,10 @@ public class BlinkStar : MonoBehaviour
                 {
                     DataController.GetInstance().SubGold((ulong)currentQuest.termsCount);
                 }
+
                 DataController.GetInstance().InsertItem(currentQuest.reward, currentQuest.rewardCount);
             }
+
             DataController.GetInstance().NextQuest();
         }
 
