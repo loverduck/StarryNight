@@ -379,6 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btn: {fileID: 114281740846246698, guid: 36f9121dfbd35d0489d638b3fbe6f815, type: 2}
+  itemInfoWindow: {fileID: 1741271472}
 --- !u!1 &339175824
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +521,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uC870\uD569 \uC544\uC774\uD15C"
+  m_Text: "\uC544\uC774\uD15C"
 --- !u!222 &411235271
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -896,7 +897,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -968,7 +969,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 4700}
+  m_SizeDelta: {x: 1080, y: 5880}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &743055578
 MonoBehaviour:
@@ -1214,7 +1215,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1532,7 +1533,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2074930173}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1855,7 +1856,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uC138\uD2B8 \uC544\uC774\uD15C"
+  m_Text: "\uC11C\uC801"
 --- !u!222 &1488759383
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1893,7 +1894,7 @@ RectTransform:
   m_Children:
   - {fileID: 339175825}
   m_Father: {fileID: 2074930173}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2073,7 +2074,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1741271474}
-        m_MethodName: OnExitBtnClick
+        m_MethodName: CloseWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2131,7 +2132,7 @@ GameObject:
   - component: {fileID: 1741271474}
   m_Layer: 5
   m_Name: ItemInfoWindow
-  m_TagString: Untagged
+  m_TagString: ItemInfoWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2154,7 +2155,7 @@ RectTransform:
   - {fileID: 1358007831}
   - {fileID: 575698274}
   m_Father: {fileID: 2074930173}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2169,10 +2170,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1741271472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2362c9c73ff704d4a8c3c03513aa5a87, type: 3}
+  m_Script: {fileID: 11500000, guid: 62ccd532cf6df224eaa161fd8c1e609b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemListWindow: {fileID: 1741271472}
 --- !u!114 &1741271475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2336,7 +2336,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2490,7 +2490,7 @@ RectTransform:
   m_Children:
   - {fileID: 37785865}
   m_Father: {fileID: 2074930173}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -2646,10 +2646,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1741271473}
   - {fileID: 1301725700}
   - {fileID: 2038360817}
   - {fileID: 1545744975}
+  - {fileID: 1741271473}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

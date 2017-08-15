@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Material
   - DataController
+  - ItemInfoWindow
+  - ItemListManager
   layers:
   - Default
   - TransparentFX

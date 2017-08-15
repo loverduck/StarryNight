@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +46,15 @@ public class CreateItem : MonoBehaviour
             btn = gameObject.GetComponent<Button>();
 
         img.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
+        
+        foreach (KeyValuePair<int, int> entry in DataController.GetInstance().haveDic)
+        {
+            // do something with entry.Value or entry.Key
+            for (int i = 0; i < entry.Value; i++)
+            {
+                GenerateItem(entry.Key, false);
+            }
+        }
     }
 
     /// <summary>
@@ -104,22 +114,22 @@ public class CreateItem : MonoBehaviour
             {
                 if (Random.Range(0, 100) >= 95)
                 {
-                    GenerateItem(Random.Range(2007, 2013));
+                    GenerateItem(Random.Range(2007, 2013), true);
                 }
                 else
                 {
-                    GenerateItem(Random.Range(2001, 2007));
+                    GenerateItem(Random.Range(2001, 2007), true);
                 }
             }
             else
             {
                 if (Random.Range(0, 100) >= 95)
                 {
-                    GenerateItem(Random.Range(1004, 1007));
+                    GenerateItem(Random.Range(1004, 1007), true);
                 }
                 else
                 {
-                    GenerateItem(Random.Range(1001, 1004));
+                    GenerateItem(Random.Range(1001, 1004), true);
                 }
             }
 
@@ -130,13 +140,16 @@ public class CreateItem : MonoBehaviour
         }
     }
 
-    private void GenerateItem(int productID)
+    public void GenerateItem(int productID, bool isNew)
     {
         //Instantiate(stick, new Vector3(-213, -396, 0), Quaternion.identity).transform.SetParent(GameObject.Find("Canvas").transform, false); // canvas 자식으로 상속해서 prifab생성
         GameObject newItem = Instantiate(item, new Vector3(-758, -284, -4), Quaternion.identity);
 
         // 현재 보유하고 있는 재료를 관리하는 Dictionary에 방금 생성한 item을 넣어준다.
-        DataController.GetInstance().InsertItem(productID);
+        if (isNew)
+        {
+            DataController.GetInstance().InsertItem(productID);
+        }
 
         ItemInfo itemInfo = newItem.GetComponent<ItemInfo>();
         ItemInfo findItemInfo = itemDic.findDic[productID];

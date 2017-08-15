@@ -7,7 +7,7 @@ public class Sale : MonoBehaviour
         if (col.tag == "Material")
         {
             //Debug.Log("Trigger");
-            DataController.GetInstance().AddGold(col.GetComponent<ItemInfo>().sellPrice);
+            DataController.GetInstance().AddGold((ulong)col.GetComponent<ItemInfo>().sellPrice);
             DataController.GetInstance().SubItemCount();
 
             Destroy(col.gameObject);

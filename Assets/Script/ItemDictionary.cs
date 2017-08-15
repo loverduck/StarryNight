@@ -3,18 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public struct Tuple<T1, T2>
-{
-    public readonly T1 m_item1;
-    public readonly T2 m_item2;
-
-    public Tuple(T1 item1, T2 item2)
-    {
-        m_item1 = item1;
-        m_item2 = item2;
-    }
-}
-
 public class ItemDictionary : MonoBehaviour
 {
     enum FILEINFO
@@ -24,29 +12,17 @@ public class ItemDictionary : MonoBehaviour
         SETITEMTABLE
     }
 
-    public int starNum
+    public struct Tuple<T1, T2>
     {
-        get;
-        private set;
-    }
+        public readonly T1 m_item1;
+        public readonly T2 m_item2;
 
-    public int materialNum
-    {
-        get;
-        private set;
+        public Tuple(T1 item1, T2 item2)
+        {
+            m_item1 = item1;
+            m_item2 = item2;
+        }
     }
-
-    public int combineNum
-    {
-        get;
-        private set;
-    }
-
-    public int setNum
-    {
-        get;
-        private set;
-    }    
 
     /// <summary>
     /// NOTE: 재료를 찾을 때 사용하는 Dictionary
@@ -61,6 +37,29 @@ public class ItemDictionary : MonoBehaviour
     /// <para>-> value(int) : material1에 해당하는 조합식 list</para>
     /// </summary>
     public Dictionary<Tuple<int, int>, List<int>> cbDic;
+
+    public int starNum { get; private set; }
+    public int materialNum { get; private set; }
+    public int combineNum { get; private set; }
+    public int setNum { get; private set; }
+
+    public static ItemDictionary instance;
+
+    public static ItemDictionary GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = FindObjectOfType<ItemDictionary>();
+
+            if (instance == null)
+            {
+                GameObject container = new GameObject("ItemDictionary");
+                instance = container.AddComponent<ItemDictionary>();
+            }
+        }
+
+        return instance;
+    }
 
     private void Start()
     {
@@ -133,10 +132,10 @@ public class ItemDictionary : MonoBehaviour
                         case "재료":
                             materialNum++;
                             break;
-                        case "조합 아이템":
+                        case "아이템":
                             combineNum++;
                             break;
-                        case "세트 아이템":
+                        case "서적":
                             setNum++;
                             break;
                         default:
@@ -145,8 +144,6 @@ public class ItemDictionary : MonoBehaviour
 
                     findDic[index] = gameObject.AddComponent<ItemInfo>();
                     findDic[index].Init(index, wordList[1], group, wordList[3], sellPrice, wordList[4], "itemImg/item_" + index);
-                    
-                    DataController.GetInstance().haveDic[index] = 0;
 
                     break;
                 case FILEINFO.SETITEMTABLE:

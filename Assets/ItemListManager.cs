@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class ItemListManager : MonoBehaviour
 {
@@ -8,12 +7,29 @@ public class ItemListManager : MonoBehaviour
     int starIdxMax, materialIdxMax, combineIdxMax, setIdxMax;
 
     ItemDictionary itemDic;
-    Dictionary<int, ItemInfo> findDic;
 
     public Button btn;
+    public GameObject itemInfoWindow;
 
     Transform starContentPanel, materialContentPanel, combineContentPanel, setContentPanel;
-    GameObject itemInfoWindow;
+
+    private static ItemListManager instance;
+
+    public static ItemListManager GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = FindObjectOfType<ItemListManager>();
+
+            if (instance == null)
+            {
+                GameObject container = new GameObject("ItemListManager");
+                instance = container.AddComponent<ItemListManager>();
+            }
+        }
+
+        return instance;
+    }
 
     private void Awake()
     {
@@ -28,12 +44,11 @@ public class ItemListManager : MonoBehaviour
         materialIdxMax = materialIdxStart + itemDic.materialNum;
         combineIdxMax = combineIdxStart + itemDic.combineNum;
         setIdxMax = setIdxStart + itemDic.setNum;
-        
+
         starContentPanel = GameObject.Find("StarContentPanel").transform;
         materialContentPanel = GameObject.Find("MaterialContentPanel").transform;
         combineContentPanel = GameObject.Find("CombineContentPanel").transform;
         setContentPanel = GameObject.Find("SetContentPanel").transform;
-        itemInfoWindow = GameObject.Find("ItemInfoWindow");
     }
 
     private void Start()
@@ -65,7 +80,6 @@ public class ItemListManager : MonoBehaviour
 
         ItemInfo itemInfo = itemBtn.GetComponent<ItemInfo>();
         ItemInfo findItemInfo = itemDic.findDic[idx];
-        BringToFront bf = itemBtn.GetComponent<BringToFront>();
 
         itemInfo.index = idx;
         itemInfo.mtName = findItemInfo.mtName;
@@ -77,7 +91,21 @@ public class ItemListManager : MonoBehaviour
 
         itemBtn.transform.SetParent(tf);
         itemBtn.GetComponent<Image>().sprite = Resources.Load<Sprite>(itemInfo.imagePath);
-        bf.itemListWindow = itemInfoWindow;
-        itemBtn.onClick.AddListener(bf.OnImgBtnClick);
+
+        itemBtn.onClick.AddListener(() => ShowWindow(itemInfo));
+    }
+
+    public void ShowWindow(ItemInfo itemInfo)
+    {
+        itemInfoWindow.gameObject.SetActive(true);
+
+        ItemInfoWindow infoWindow = itemInfoWindow.GetComponent<ItemInfoWindow>();
+
+        infoWindow.itemImg.sprite = Resources.Load<Sprite>(itemInfo.imagePath);
+        infoWindow.itemName.text = itemInfo.mtName;
+        infoWindow.itemSort.text = itemInfo.group;
+        infoWindow.itemGrade.text = itemInfo.grade;
+        infoWindow.itemCost.text = itemInfo.sellPrice.ToString();
+        infoWindow.itemText.text = itemInfo.description;
     }
 }
