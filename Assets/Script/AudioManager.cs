@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour {
 
     private int bgmAlive;
     private int effAlive;
+    private int voiceAlive;
 
     public AudioClip click;
     public AudioClip sale;
@@ -18,6 +19,7 @@ public class AudioManager : MonoBehaviour {
     public AudioClip item;
     public AudioClip mix;
     public AudioClip questStar;
+    private AudioClip voice;
 
     public static AudioManager GetInstance()
     {
@@ -40,6 +42,7 @@ public class AudioManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         bgmAlive = PlayerPrefs.GetInt("BGM", 1);
         effAlive = PlayerPrefs.GetInt("Effect", 1);
+        voiceAlive = PlayerPrefs.GetInt("Voice", 1);
         myAudio = gameObject.GetComponent<AudioSource>();
     }
 
@@ -63,6 +66,17 @@ public class AudioManager : MonoBehaviour {
     {
         effAlive = alive;
         PlayerPrefs.SetInt("Effect", effAlive);
+    }
+
+    public int GetVoiceAlive()
+    {
+        return voiceAlive;
+    }
+
+    public void SetVoiceAlive(int alive)
+    {
+        voiceAlive = alive;
+        PlayerPrefs.SetInt("Voice", voiceAlive);
     }
 
     public void BGMOff()
@@ -130,4 +144,15 @@ public class AudioManager : MonoBehaviour {
             myAudio.PlayOneShot(questStar);
         }
     }
+
+    public void VoiceSound()
+    {
+        if (voiceAlive == 1)
+        {
+            int num = Random.Range(1,7);
+            AudioClip voice = Resources.Load<AudioClip>("audio/voice_" + num);
+            myAudio.PlayOneShot(voice);
+        }
+    }
+
 }

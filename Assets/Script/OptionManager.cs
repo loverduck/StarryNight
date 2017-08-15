@@ -7,9 +7,11 @@ public class OptionManager : MonoBehaviour {
 
     public Button bgm;
     public Button effect;
+    public Button voice;
 
     public Text bgmDisplayer;
     public Text effDisplayer;
+    public Text voiceDisplayer;
 
     private void Awake()
     {
@@ -35,6 +37,17 @@ public class OptionManager : MonoBehaviour {
         {
             effect.GetComponent<Image>().sprite = Resources.Load<Sprite>("optionImg/pull");
             effDisplayer.text = "OFF";
+        }
+
+        if (AudioManager.GetInstance().GetVoiceAlive() == 1)
+        {
+            voice.GetComponent<Image>().sprite = Resources.Load<Sprite>("optionImg/push");
+            voiceDisplayer.text = "ON";
+        }
+        else
+        {
+            voice.GetComponent<Image>().sprite = Resources.Load<Sprite>("optionImg/pull");
+            voiceDisplayer.text = "OFF";
         }
     }
 
@@ -69,6 +82,22 @@ public class OptionManager : MonoBehaviour {
             AudioManager.GetInstance().SetEffAlive(1);
             effect.GetComponent<Image>().sprite = Resources.Load<Sprite>("optionImg/push");
             effDisplayer.text = "ON";
+        }
+    }
+
+    public void VoiceButton()
+    {
+        if (AudioManager.GetInstance().GetVoiceAlive() == 1)
+        {
+            AudioManager.GetInstance().SetVoiceAlive(0);
+            voice.GetComponent<Image>().sprite = Resources.Load<Sprite>("optionImg/pull");
+            voiceDisplayer.text = "OFF";
+        }
+        else
+        {
+            AudioManager.GetInstance().SetVoiceAlive(1);
+            voice.GetComponent<Image>().sprite = Resources.Load<Sprite>("optionImg/push");
+            voiceDisplayer.text = "ON";
         }
     }
 
