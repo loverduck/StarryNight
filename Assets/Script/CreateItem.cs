@@ -6,16 +6,17 @@ using UnityEngine.UI;
 public class CreateItem : MonoBehaviour
 {
     private int energy = 0;  // 에너지 
-    private int energyPerClick = 20; // 클릭당 에너지 증가량
+    private int energyPerClick; // 클릭당 에너지 증가량
     private int energyMaxValue = 100; // 에너지 충전 최대량
     public GameObject item; // 아이템
-    public Image img;
+    public Image img_earthback;
     public Button btn;
 
     private ItemDictionary itemDic;
 
     private void Awake()
     {
+        energyPerClick = DataController.GetInstance().GetEnergyPerClick();
         itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
     }
 
@@ -39,14 +40,14 @@ public class CreateItem : MonoBehaviour
 
     void Start()
     {
-        if (img == null)
-            img = gameObject.GetComponent<Image>();
+        if (img_earthback == null)
+            img_earthback = GameObject.Find("EarthBack").GetComponent<Image>();
 
         if (btn == null)
             btn = gameObject.GetComponent<Button>();
-
-        img.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
         
+        img_earthback.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
+
         foreach (KeyValuePair<int, int> entry in DataController.GetInstance().haveDic)
         {
             // do something with entry.Value or entry.Key
@@ -55,6 +56,7 @@ public class CreateItem : MonoBehaviour
                 GenerateItem(entry.Key, false);
             }
         }
+
     }
 
     /// <summary>
@@ -69,7 +71,7 @@ public class CreateItem : MonoBehaviour
     public void AddEnergy() // 클릭 수 증가
     {
         energy += energyPerClick;
-        img.fillAmount = (float)energy / energyMaxValue;
+        img_earthback.fillAmount = (float)energy / energyMaxValue;
     }
 
     public void ResetEnergy() // 클릭 수 초기화
@@ -77,14 +79,14 @@ public class CreateItem : MonoBehaviour
         btn.enabled = false;
         StartCoroutine(DecreaseEnergy());
     }
-
+    // 에너지 감소
     IEnumerator DecreaseEnergy()
     {
-        while (img.fillAmount != 0)
+        while (img_earthback.fillAmount != 0)
         {
             yield return new WaitForSeconds(0.05f);
 
-            img.fillAmount -= 0.1f;
+            img_earthback.fillAmount -= 0.1f;
         }
 
         energy = 0;
@@ -93,13 +95,15 @@ public class CreateItem : MonoBehaviour
         yield return null;
     }
 
+    // item1maker 클릭 시
     public void OnClick()
     {
         AddEnergy();
         NewObject();
     }
 
-    private void NewObject() // 아이템 생성
+    // 아이템 생성
+    private void NewObject()
     {
         if (energy >= energyMaxValue)
         {
@@ -148,7 +152,7 @@ public class CreateItem : MonoBehaviour
         // 현재 보유하고 있는 재료를 관리하는 Dictionary에 방금 생성한 item을 넣어준다.
         if (isNew)
         {
-            DataController.GetInstance().InsertItem(productID);
+            DataController.GetInstance().InsertItem(productID, 1);
         }
 
         ItemInfo itemInfo = newItem.GetComponent<ItemInfo>();
