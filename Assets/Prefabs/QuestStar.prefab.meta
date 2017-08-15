@@ -1,17 +1,9 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: e75e7bdf52f365f449269f0aaa113672
-timeCreated: 1502774754
-licenseType: Free
-NativeFormatImporter:
-  mainObjectFileID: -1
-=======
 guid: d24d8e2fb300a1241a8cfd6d4c056adc
 timeCreated: 1502432670
 licenseType: Free
 NativeFormatImporter:
   mainObjectFileID: 100100000
->>>>>>> origin/ysy
   userData: 
   assetBundleName: 
   assetBundleVariant: 

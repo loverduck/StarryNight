@@ -162,9 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a32cecd98b6570645a461d80509653b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  itemOpenList: 
-=======
 --- !u!114 &1834994928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,4 +184,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6215d7d16c3079a4dae784a3a8aa2d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
->>>>>>> origin/ysy
