@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class DataController : MonoBehaviour
 {
-    // 현재 보유 골드량, 현재 보유 아이템 개수, 아이템 개수 제한, 클릭당 올라가는 게이지 양, 퀘스트 진행도(인덱스)
+    // 현재 보유 골드량
     private ulong m_gold;
+    
+    // 현재 보유 아이템 개수, 퀘스트 진행도(인덱스)
     private int m_itemcount, m_questProcess;
+
     private float m_leftTimer1, m_leftTimer2, m_leftTimer3;
 
     // 현재 인벤토리 레벨, 클릭 게이지 레벨
@@ -17,6 +20,12 @@ public class DataController : MonoBehaviour
     // 최대 업그레이드 가능한 - 인벤토리 레벨, 클릭 게이지 레벨
     private int invenMaxLv, energyPerClickMaxLv;
 
+    // haveDic 정보 저장 경로
+    public string haveDicPath { get; private set; }
+
+    // itemOpenList 정보 저장 경로
+    public string itemOpenListPath { get; private set; }
+    
     private UpgradeDictionary upgradeDic;
 
     /// <summary>
@@ -70,8 +79,11 @@ public class DataController : MonoBehaviour
 
         invenMaxLv = PlayerPrefs.GetInt("InvenMaxLevel", 20);
         energyPerClickMaxLv = PlayerPrefs.GetInt("EnergyPerClickMaxLevel", 20);
+        
+        haveDicPath = "/FileData/haveDic.txt";
+        itemOpenListPath = "/FileData/itemOpenList.txt";
 
-        haveDic = LoadGameData("/FileData/haveDic.txt") as Dictionary<int, int>;
+        haveDic = LoadGameData(haveDicPath) as Dictionary<int, int>;
 
         if (haveDic != null)
         {
@@ -84,7 +96,7 @@ public class DataController : MonoBehaviour
             haveDic = new Dictionary<int, int>();
         }
 
-        itemOpenList = LoadGameData("/FileData/itemOpenList.txt") as List<int>;
+        itemOpenList = LoadGameData(itemOpenListPath) as List<int>;
 
         if (itemOpenList != null)
         {
@@ -99,7 +111,7 @@ public class DataController : MonoBehaviour
     }
 
     // 게임 데이터를 불러오는 함수
-    private object LoadGameData(string dataPath)
+    public object LoadGameData(string dataPath)
     {
         string filePath = Application.dataPath + dataPath;
 
@@ -112,7 +124,7 @@ public class DataController : MonoBehaviour
     }
 
     // 데이터를 역직렬화하는 함수
-    private object DataDeserialize(byte[] buffer)
+    public object DataDeserialize(byte[] buffer)
     {
         BinaryFormatter binFormatter = new BinaryFormatter();
         MemoryStream mStream = new MemoryStream();
@@ -124,14 +136,14 @@ public class DataController : MonoBehaviour
     }
 
     // 게임 데이터를 저장하는 함수
-    private void SaveGameData(object data, string dataPath)
+    public void SaveGameData(object data, string dataPath)
     {
         byte[] stream = DataSerialize(data);
         File.WriteAllBytes(Application.dataPath + dataPath, stream);
     }
 
     // 데이터를 직렬화하는 함수
-    private byte[] DataSerialize(object data)
+    public byte[] DataSerialize(object data)
     {
         BinaryFormatter binFormmater = new BinaryFormatter();
         MemoryStream mStream = new MemoryStream();
@@ -254,9 +266,9 @@ public class DataController : MonoBehaviour
         if (!CheckExistItem(key))
         {
             itemOpenList.Add(key);
-            SaveGameData(itemOpenList, "/FileData/itemOpenList.txt");
+            SaveGameData(itemOpenList, itemOpenListPath);
 
-            Debug.Log("itemOpenList - DataSerialize");
+            //Debug.Log("itemOpenList - DataSerialize");
 
             haveDic.Add(key, 1);
         }
@@ -265,9 +277,9 @@ public class DataController : MonoBehaviour
             haveDic[key] += addNum;
         }
         
-        SaveGameData(haveDic, "/FileData/haveDic.txt");
+        SaveGameData(haveDic, haveDicPath);
 
-        Debug.Log("InsertItem - haveDic DataSerialize");
+        //Debug.Log("InsertItem - haveDic DataSerialize");
     }
 
     /// <summary>
@@ -284,10 +296,10 @@ public class DataController : MonoBehaviour
 
         haveDic[key]--;
 
-        UM_Storage.Save("haveDic", DataSerialize(haveDic));
-        SaveGameData(haveDic, "/FileData/haveDic.txt");
+        //UM_Storage.Save("haveDic", DataSerialize(haveDic));
+        SaveGameData(haveDic, haveDicPath);
 
-        Debug.Log("DeleteItem() - haveDic DataSerialize");
+        //Debug.Log("DeleteItem() - haveDic DataSerialize");
     }
 
     /// <summary>
