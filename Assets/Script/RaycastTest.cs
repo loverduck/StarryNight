@@ -28,10 +28,10 @@ public class RaycastTest : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         GetComponent<BoxCollider2D>().isTrigger = false;
-
         //CameraController.focusOnItem = false;
         //Debug.Log("focusOnItem : " + CameraController.focusOnItem);
-        if (Input.mousePosition.x > 7*Screen.width/8 || Input.mousePosition.x < Screen.width/8 || Input.mousePosition.y > 7*Screen.height/8 || Input.mousePosition.y < Screen.height/3)
+
+        if (Input.mousePosition.x > 7 * Screen.width / 8 || Input.mousePosition.x < Screen.width / 8 || Input.mousePosition.y > 7 * Screen.height / 8 || Input.mousePosition.y < Screen.height / 3)
             transform.position = Camera.main.ScreenToWorldPoint(start);
     }
 

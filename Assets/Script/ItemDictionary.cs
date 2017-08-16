@@ -62,7 +62,7 @@ public class ItemDictionary : MonoBehaviour
     public int combineNum { get; private set; }
     public int setNum { get; private set; }
 
-    public static ItemDictionary instance;
+    private static ItemDictionary instance;
 
     public static ItemDictionary GetInstance()
     {

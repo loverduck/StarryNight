@@ -17,13 +17,6 @@ public class CreateItem : MonoBehaviour
 
     public Button combineButton;
 
-    private void Awake()
-    {
-        //energyPerClick = DataController.GetInstance().GetEnergyPerClick();
-        energyPerClick = 100;
-        itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
-    }
-
     private static CreateItem instance;
 
     public static CreateItem GetInstance()
@@ -40,6 +33,14 @@ public class CreateItem : MonoBehaviour
         }
 
         return instance;
+    }
+    
+    private void Awake()
+    {
+        energyPerClick = DataController.GetInstance().GetEnergyPerClick();
+        itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
+
+        combineButton.gameObject.SetActive(false);
     }
 
     void Start()
