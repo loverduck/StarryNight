@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ItemDictionary : MonoBehaviour
 {
@@ -72,7 +71,8 @@ public class ItemDictionary : MonoBehaviour
         ReadDataFile("dataTable/combineTable", FILEINFO.COMBINETABLE);
         ReadDataFile("dataTable/itemTable", FILEINFO.ITEMTABLE);
 
-        SceneManager.LoadScene("Main");
+        DataController.GetInstance().SetloadingFinish(true);
+
     }
 
     private void ReadDataFile(string fileName, FILEINFO fileType)

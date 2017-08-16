@@ -9,6 +9,8 @@ public class DataController : MonoBehaviour
     // 현재 보유 골드량
     private ulong m_gold;
 
+    private bool loadingFinish;
+
     // 현재 보유 아이템 개수, 퀘스트 진행도(인덱스)
     private int m_itemcount, m_questProcess, m_energy;
 
@@ -66,6 +68,8 @@ public class DataController : MonoBehaviour
 
         upgradeDic = GameObject.FindWithTag("DataController").GetComponent<UpgradeDictionary>();
 
+        loadingFinish = false;
+
         // Key : Value로써 PlayerPrefs에 저장
         m_gold = Convert.ToUInt64(PlayerPrefs.GetString("Gold", "0"));
         m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
@@ -117,6 +121,7 @@ public class DataController : MonoBehaviour
         m_leftTimer3 -= Time.deltaTime;
         PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
     }
+
 
     // 게임 데이터를 불러오는 함수
     public object LoadGameData(string dataPath)
@@ -194,6 +199,16 @@ public class DataController : MonoBehaviour
             int subTime = (int)currentTime.Subtract(lastTime).TotalSeconds;
             return subTime;
         }
+    }
+
+    public bool GetloadingFinish()
+    {
+        return loadingFinish;
+    }
+
+    public void SetloadingFinish(bool finish)
+    {
+        loadingFinish = finish;
     }
 
     /// <summary>

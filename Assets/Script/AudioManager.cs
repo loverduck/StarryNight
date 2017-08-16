@@ -40,8 +40,8 @@ public class AudioManager : MonoBehaviour {
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        bgmAlive = PlayerPrefs.GetInt("BGM", 0);
-        effAlive = PlayerPrefs.GetInt("Effect", 0);
+        bgmAlive = PlayerPrefs.GetInt("BGM", 1);
+        effAlive = PlayerPrefs.GetInt("Effect", 1);
         voiceAlive = PlayerPrefs.GetInt("Voice", 1);
         myAudio = gameObject.GetComponent<AudioSource>();
     }
