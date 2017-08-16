@@ -96,6 +96,7 @@ public class ItemTimer3 : MonoBehaviour
 
             CreateSetItem(id);
             AudioManager.GetInstance().ItemSound();
+            DataController.GetInstance().AddItemCount();
 
             DataController.GetInstance().SetLeftTimer3(cooltime);
             btn.enabled = false;

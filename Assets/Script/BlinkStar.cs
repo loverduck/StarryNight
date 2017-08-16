@@ -174,6 +174,7 @@ public class BlinkStar : MonoBehaviour
                 }
 
                 DataController.GetInstance().InsertItem(currentQuest.reward, currentQuest.rewardCount);
+                DataController.GetInstance().AddItemCount();
             }
 
             DataController.GetInstance().NextQuest();

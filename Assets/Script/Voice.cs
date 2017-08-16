@@ -16,7 +16,7 @@ public class Voice : MonoBehaviour {
     IEnumerator WaitVoice()
     {
         character.enabled = false;
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(2.0f);
         character.enabled = true;
     }
 }
