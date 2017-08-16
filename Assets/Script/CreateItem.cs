@@ -19,8 +19,7 @@ public class CreateItem : MonoBehaviour
 
     private void Awake()
     {
-        //energyPerClick = DataController.GetInstance().GetEnergyPerClick();
-        energyPerClick = 100;
+        energyPerClick = DataController.GetInstance().GetEnergyPerClick();
         itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
     }
 

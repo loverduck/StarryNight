@@ -74,7 +74,7 @@ public class DataController : MonoBehaviour
         m_gold = Convert.ToUInt64(PlayerPrefs.GetString("Gold", "0"));
         m_itemcount = PlayerPrefs.GetInt("ItemCount", 0);
         m_questProcess = PlayerPrefs.GetInt("QuestProcess", 90101);
-        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 1.0f);
+        m_leftTimer1 = PlayerPrefs.GetFloat("LeftTimer1", 300.0f);
         m_leftTimer2 = PlayerPrefs.GetFloat("LeftTimer2", 300.0f);
         m_leftTimer3 = PlayerPrefs.GetFloat("LeftTimer3", 300.0f);
         m_energy = PlayerPrefs.GetInt("Energy", 0);
@@ -110,6 +110,8 @@ public class DataController : MonoBehaviour
         m_leftTimer3 -= TimeAfterLastPlay;
 
         InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
+
+        DataController.GetInstance().SetloadingFinish(true);
     }
 
     void Update()

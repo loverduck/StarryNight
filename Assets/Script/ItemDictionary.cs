@@ -94,7 +94,6 @@ public class ItemDictionary : MonoBehaviour
         ReadDataFile("dataTable/itemTable", FILEINFO.ITEMTABLE);
         ReadDataFile("dataTable/setItemTable", FILEINFO.SETITEMTABLE);
 
-        DataController.GetInstance().SetloadingFinish(true);
     }
 
     private void ReadDataFile(string fileName, FILEINFO fileType)
