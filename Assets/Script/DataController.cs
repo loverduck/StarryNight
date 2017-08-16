@@ -85,8 +85,8 @@ public class DataController : MonoBehaviour
         invenMaxLv = PlayerPrefs.GetInt("InvenMaxLevel", 0);
         energyPerClickMaxLv = PlayerPrefs.GetInt("EnergyPerClickMaxLevel", 0);
 
-        haveDicPath = "/FileData/haveDic.txt";
-        itemOpenListPath = "/FileData/itemOpenList.txt";
+        haveDicPath = "/haveDic.txt";
+        itemOpenListPath = "/itemOpenList.txt";
 
         haveDic = LoadGameData(haveDicPath) as Dictionary<int, int>;
 
@@ -111,7 +111,7 @@ public class DataController : MonoBehaviour
 
         InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
 
-        DataController.GetInstance().SetloadingFinish(true);
+        SetloadingFinish(true);
     }
 
     void Update()
@@ -130,7 +130,7 @@ public class DataController : MonoBehaviour
     // 게임 데이터를 불러오는 함수
     public object LoadGameData(string dataPath)
     {
-        string filePath = Application.dataPath + dataPath;
+        string filePath = Application.persistentDataPath + dataPath;
 
         if (File.Exists(filePath))
         {
@@ -156,7 +156,7 @@ public class DataController : MonoBehaviour
     public void SaveGameData(object data, string dataPath)
     {
         byte[] stream = DataSerialize(data);
-        File.WriteAllBytes(Application.dataPath + dataPath, stream);
+        File.WriteAllBytes(Application.persistentDataPath + dataPath, stream);
     }
 
     // 데이터를 직렬화하는 함수

@@ -93,7 +93,6 @@ public class ItemDictionary : MonoBehaviour
         ReadDataFile("dataTable/combineTable", FILEINFO.COMBINETABLE);
         ReadDataFile("dataTable/itemTable", FILEINFO.ITEMTABLE);
         ReadDataFile("dataTable/setItemTable", FILEINFO.SETITEMTABLE);
-
     }
 
     private void ReadDataFile(string fileName, FILEINFO fileType)

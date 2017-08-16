@@ -213,7 +213,7 @@ PlayerSettings:
   AndroidTargetDevice: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/Soyeon/Desktop/StarryNight/starrynight.keystore
+  AndroidKeystoreName: C:/Users/1reds/Desktop/UnityProject/StarryNight/starrynight.keystore
   AndroidKeyaliasName: starrynight
   AndroidTVCompatibility: 1
   AndroidIsGame: 1

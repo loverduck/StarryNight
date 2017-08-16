@@ -19,7 +19,8 @@ public class CreateItem : MonoBehaviour
 
     private void Awake()
     {
-        energyPerClick = DataController.GetInstance().GetEnergyPerClick();
+        //energyPerClick = DataController.GetInstance().GetEnergyPerClick();
+        energyPerClick = 100;
         itemDic = GameObject.FindWithTag("DataController").GetComponent<ItemDictionary>();
     }
 
@@ -53,21 +54,25 @@ public class CreateItem : MonoBehaviour
 
         List<SetItemInfo> tmpSetItemInfo = new List<SetItemInfo>();
 
-        foreach (KeyValuePair<int, int> entry in DataController.GetInstance().haveDic)
+        if (DataController.GetInstance().haveDic != null)
         {
-            // do something with entry.Value or entry.Key
-            for (int i = 0; i < entry.Value; i++)
+
+            foreach (KeyValuePair<int, int> entry in DataController.GetInstance().haveDic)
             {
-                GenerateItem(entry.Key, false);
-
-                SetItemInfo setItemInfo = ItemDictionary.GetInstance().CheckSetItemCombine(entry.Key);
-
-                if (setItemInfo.result != 0 && !tmpSetItemInfo.Contains(setItemInfo))
+                // do something with entry.Value or entry.Key
+                for (int i = 0; i < entry.Value; i++)
                 {
-                    tmpSetItemInfo.Add(setItemInfo);
+                    GenerateItem(entry.Key, false);
 
-                    combineButton.gameObject.SetActive(true);
-                    combineButton.onClick.AddListener(() => OnClick(setItemInfo));
+                    SetItemInfo setItemInfo = ItemDictionary.GetInstance().CheckSetItemCombine(entry.Key);
+
+                    if (setItemInfo.result != 0 && !tmpSetItemInfo.Contains(setItemInfo))
+                    {
+                        tmpSetItemInfo.Add(setItemInfo);
+
+                        combineButton.gameObject.SetActive(true);
+                        combineButton.onClick.AddListener(() => OnClick(setItemInfo));
+                    }
                 }
             }
         }
