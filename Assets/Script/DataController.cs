@@ -441,9 +441,9 @@ public class DataController : MonoBehaviour
         return invenMaxLv;
     }
 
-    public void SetMaxInvenLv()
+    public void SetMaxInvenLv(int num)
     {
-        invenMaxLv += 1;
+        invenMaxLv = num;
         PlayerPrefs.SetInt("InvenMaxLevel", invenMaxLv);
     }
 
@@ -452,9 +452,9 @@ public class DataController : MonoBehaviour
         return energyPerClickMaxLv;
     }
 
-    public void SetMaxPerClickLv()
+    public void SetMaxPerClickLv(int num)
     {
-        energyPerClickMaxLv += 1;
+        energyPerClickMaxLv = num;
         PlayerPrefs.SetInt("EnergyPerClickMaxLevel", energyPerClickMaxLv);
     }
 
@@ -480,11 +480,11 @@ public class DataController : MonoBehaviour
     {
         if (index == 50001)
         {
-            SetMaxInvenLv();
+            SetMaxInvenLv(20);
         }
         else if (index == 50002)
         {
-            SetMaxPerClickLv();
+            SetMaxPerClickLv(20);
         }
     }
 }
