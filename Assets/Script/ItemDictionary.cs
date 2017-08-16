@@ -95,7 +95,6 @@ public class ItemDictionary : MonoBehaviour
         ReadDataFile("dataTable/setItemTable", FILEINFO.SETITEMTABLE);
 
         DataController.GetInstance().SetloadingFinish(true);
-
     }
 
     private void ReadDataFile(string fileName, FILEINFO fileType)
@@ -220,14 +219,6 @@ public class ItemDictionary : MonoBehaviour
             {
                 if (haveDic.ContainsKey(setItemInfo.index2) && haveDic[setItemInfo.index2] > 0 && haveDic.ContainsKey(setItemInfo.index3) && haveDic[setItemInfo.index3] > 0 && haveDic.ContainsKey(setItemInfo.index4) && haveDic[setItemInfo.index4] > 0)
                 {
-                    //dataController.DeleteItem(setItemInfo.index2);
-                    //dataController.DeleteItem(setItemInfo.index3);
-                    //dataController.DeleteItem(setItemInfo.index4);
-
-                    //dataController.InsertItem(setItemInfo.result, 1);
-
-                    //return true;
-
                     return setItemInfo;
                 }
             }
@@ -235,12 +226,6 @@ public class ItemDictionary : MonoBehaviour
             {
                 if (haveDic.ContainsKey(setItemInfo.index1) && haveDic[setItemInfo.index1] > 0 && haveDic.ContainsKey(setItemInfo.index3) && haveDic[setItemInfo.index3] > 0 && haveDic.ContainsKey(setItemInfo.index4) && haveDic[setItemInfo.index4] > 0)
                 {
-                    //dataController.DeleteItem(setItemInfo.index1);
-                    //dataController.DeleteItem(setItemInfo.index3);
-                    //dataController.DeleteItem(setItemInfo.index4);
-
-                    //dataController.InsertItem(setItemInfo.result, 1);
-
                     return setItemInfo;
                 }
             }
@@ -248,12 +233,6 @@ public class ItemDictionary : MonoBehaviour
             {
                 if (haveDic.ContainsKey(setItemInfo.index1) && haveDic[setItemInfo.index1] > 0 && haveDic.ContainsKey(setItemInfo.index2) && haveDic[setItemInfo.index2] > 0 && haveDic.ContainsKey(setItemInfo.index4) && haveDic[setItemInfo.index4] > 0)
                 {
-                    //dataController.DeleteItem(setItemInfo.index1);
-                    //dataController.DeleteItem(setItemInfo.index2);
-                    //dataController.DeleteItem(setItemInfo.index4);
-
-                    //dataController.InsertItem(setItemInfo.result, 1);
-
                     return setItemInfo;
                 }
             }
@@ -261,12 +240,6 @@ public class ItemDictionary : MonoBehaviour
             {
                 if (haveDic.ContainsKey(setItemInfo.index1) && haveDic[setItemInfo.index1] > 0 && haveDic.ContainsKey(setItemInfo.index2) && haveDic[setItemInfo.index2] > 0 && haveDic.ContainsKey(setItemInfo.index3) && haveDic[setItemInfo.index3] > 0)
                 {
-                    //dataController.DeleteItem(setItemInfo.index1);
-                    //dataController.DeleteItem(setItemInfo.index2);
-                    //dataController.DeleteItem(setItemInfo.index3);
-
-                    //dataController.InsertItem(setItemInfo.result, 1);
-
                     return setItemInfo;
                 }
             }

@@ -62,7 +62,7 @@ public class ItemTimer1 : MonoBehaviour
         {
             timeDisplayer.text = "0:00";
             img.fillAmount = 1.0f;
-
+            
             DataController.GetInstance().SetLeftTimer1(0);
 
             if (btn)

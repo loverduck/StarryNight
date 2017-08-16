@@ -44,7 +44,15 @@ public class UpgradeManager : MonoBehaviour
         if (currentInvenLv >= DataController.GetInstance().GetMaxInvenLv())
         {
             invenUpBtn.enabled = false;
-            invenUnlock.SetActive(true);
+            if (currentInvenLv == 20)
+            {
+                invenUnlock.SetActive(false);
+            }
+            else
+            {
+                invenUnlock.SetActive(true);
+            }
+            
         }
         else
         {
@@ -64,7 +72,14 @@ public class UpgradeManager : MonoBehaviour
         if (currentPerClickLv >= DataController.GetInstance().GetMaxPerClickLv())
         {
             energyPerClickUpBtn.enabled = false;
-            perClickUnlock.SetActive(true);
+            if (currentPerClickLv == 20)
+            {
+                perClickUnlock.SetActive(false);
+            }
+            else
+            {
+                perClickUnlock.SetActive(true);
+            }
         }
         else
         {
@@ -81,14 +96,30 @@ public class UpgradeManager : MonoBehaviour
         }
 
         // value[current값] -> 꼭!
-        int nextInvenValue = 10 + upgradeDic.findUpDic[50001].value[currentInvenLv];
-        int nextClickValue = 2 + upgradeDic.findUpDic[50002].value[currentPerClickLv];
+        if (currentInvenLv == 20)
+        {
+            invenUp_Displayer.text = "MAX";
+            invenUpCost_Displayer.text = "MAX";
+        }
+        else
+        {
+            int nextInvenValue = 10 + upgradeDic.findUpDic[50001].value[currentInvenLv];
+            invenUp_Displayer.text = "인벤토리 +" + DataController.GetInstance().GetItemLimit() + " -> +" + nextInvenValue;
+            invenUpCost_Displayer.text = upgradeDic.FindUpgrade(50001).cost[currentInvenLv] + "원";
+        }
 
-        invenUp_Displayer.text = "인벤토리 +" + DataController.GetInstance().GetItemLimit() + " -> +" + nextInvenValue;
-        invenUpCost_Displayer.text = upgradeDic.FindUpgrade(50001).cost[currentInvenLv] + "원";
+        if (currentPerClickLv == 20)
+        {
+            energyPerClickUp_Displayer.text = "MAX";
+            energyPerClickUpCost_Displayer.text = "MAX";
+        }
+        else
+        {
+            int nextClickValue = 2 + upgradeDic.findUpDic[50002].value[currentPerClickLv];
+            energyPerClickUp_Displayer.text = "클릭당 게이지 +" + DataController.GetInstance().GetEnergyPerClick() + " -> +" + nextClickValue;
+            energyPerClickUpCost_Displayer.text = upgradeDic.FindUpgrade(50002).cost[currentPerClickLv] + "원";
+        }
 
-        energyPerClickUp_Displayer.text = "클릭당 게이지 +" + DataController.GetInstance().GetEnergyPerClick() + " -> +" + nextClickValue;
-        energyPerClickUpCost_Displayer.text = upgradeDic.FindUpgrade(50002).cost[currentPerClickLv] + "원";
     }
 
     public void InvenUpgrade()

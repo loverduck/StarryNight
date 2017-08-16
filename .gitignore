@@ -37,3 +37,5 @@ sysinfo.txt
 *.unitypackage
 
 # End of https://www.gitignore.io/api/unity
+Assets/FileData/haveDic.txt
+Assets/FileData/itemOpenList.txt

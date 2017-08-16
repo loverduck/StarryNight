@@ -14,7 +14,7 @@ public class CreateItem : MonoBehaviour
     public Button btn;
 
     private ItemDictionary itemDic;
-    
+
     public Button combineButton;
 
     private void Awake()
@@ -60,7 +60,7 @@ public class CreateItem : MonoBehaviour
             for (int i = 0; i < entry.Value; i++)
             {
                 GenerateItem(entry.Key, false);
-                
+
                 SetItemInfo setItemInfo = ItemDictionary.GetInstance().CheckSetItemCombine(entry.Key);
 
                 if (setItemInfo.result != 0 && !tmpSetItemInfo.Contains(setItemInfo))
@@ -196,6 +196,10 @@ public class CreateItem : MonoBehaviour
         dataController.DeleteItem(setItemInfo.index3);
         dataController.DeleteItem(setItemInfo.index4);
 
+        dataController.SubItemCount();
+        dataController.SubItemCount();
+        dataController.SubItemCount();
+        
         dataController.InsertItem(setItemInfo.result, 1);
 
         SceneManager.LoadScene("Main");

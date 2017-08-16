@@ -147,50 +147,53 @@ public class BlinkStar : MonoBehaviour
             {
                 currentItemNum = DataController.GetInstance().GetItemNum(checkItemIndex);
             }
-           
+
         }
 
         // 조건 아이템의 갯수 확인
         if (checkItemCount <= currentItemNum)
         {
-            if (currentQuest.reward == 9999)
+            if (DataController.GetInstance().GetItemCount() < DataController.GetInstance().GetItemLimit())
             {
-                DataController.GetInstance().AddGold((ulong)currentQuest.rewardCount);
-            }
-            else if (currentQuest.reward > 50000)
-            {
-                if (currentQuest.termsItem == 9999)
+                if (currentQuest.reward == 9999)
                 {
-                    DataController.GetInstance().SubGold((ulong)currentQuest.termsCount);
+                    DataController.GetInstance().AddGold((ulong)currentQuest.rewardCount);
+                }
+                else if (currentQuest.reward > 50000)
+                {
+                    if (currentQuest.termsItem == 9999)
+                    {
+                        DataController.GetInstance().SubGold((ulong)currentQuest.termsCount);
+                    }
+
+                    DataController.GetInstance().SetMaxUpgradeLevel(currentQuest.reward);
+                }
+                else
+                {
+                    // 조건이 골드일 경우
+                    if (currentQuest.termsItem == 9999)
+                    {
+                        DataController.GetInstance().SubGold((ulong)currentQuest.termsCount);
+                    }
+
+                    DataController.GetInstance().InsertItem(currentQuest.reward, currentQuest.rewardCount);
+                    DataController.GetInstance().AddItemCount();
                 }
 
-                DataController.GetInstance().SetMaxUpgradeLevel(currentQuest.reward);
-            }
-            else
-            {
-                // 조건이 골드일 경우
-                if (currentQuest.termsItem == 9999)
+                DataController.GetInstance().NextQuest();
+                blinkAlive = false;
+
+                if (DataController.GetInstance().GetQuestProcess() < 90105)
                 {
-                    DataController.GetInstance().SubGold((ulong)currentQuest.termsCount);
+
+                    BlinkStar nextStar = GameObject.Find("Aris_" + DataController.GetInstance().GetQuestProcess()).GetComponent<BlinkStar>();
+                    nextStar.BlingBling();
                 }
-
-                DataController.GetInstance().InsertItem(currentQuest.reward, currentQuest.rewardCount);
-               
-            }
-
-            DataController.GetInstance().NextQuest();
-            blinkAlive = false;
-
-            if (DataController.GetInstance().GetQuestProcess() < 90105)
-            {
-                
-                BlinkStar nextStar = GameObject.Find("Aris_" + DataController.GetInstance().GetQuestProcess()).GetComponent<BlinkStar>();
-                nextStar.BlingBling();                
-            }
-            else if (DataController.GetInstance().GetQuestProcess() > 90105 && DataController.GetInstance().GetQuestProcess() < 90124)
-            {
-                BlinkStar nextStar = GameObject.Find("Taurus_" + DataController.GetInstance().GetQuestProcess()).GetComponent<BlinkStar>();
-                nextStar.BlingBling();
+                else if (DataController.GetInstance().GetQuestProcess() > 90105 && DataController.GetInstance().GetQuestProcess() < 90124)
+                {
+                    BlinkStar nextStar = GameObject.Find("Taurus_" + DataController.GetInstance().GetQuestProcess()).GetComponent<BlinkStar>();
+                    nextStar.BlingBling();
+                }
             }
         }
 
