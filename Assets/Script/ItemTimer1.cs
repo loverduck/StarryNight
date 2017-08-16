@@ -10,7 +10,7 @@ public class ItemTimer1 : MonoBehaviour
     public Text timeDisplayer;
     public Image img;
     public Button btn;
-    float cooltime = 5.0f;
+    float cooltime = 1.0f;
     public bool disableOnStart = false;
     private int sec;
     private int sec_1;
