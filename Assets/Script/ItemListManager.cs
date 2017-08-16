@@ -8,8 +8,8 @@ public class ItemListManager : MonoBehaviour
 
     ItemDictionary itemDic;
 
-    public Button btn;
-    public GameObject itemInfoWindow;
+    public GameObject panel;
+    public GameObject itemInfoPanel;
 
     Transform starContentPanel, materialContentPanel, combineContentPanel, setContentPanel;
 
@@ -76,9 +76,12 @@ public class ItemListManager : MonoBehaviour
 
     void AddItemButton(int idx, Transform tf)
     {
-        Button itemBtn = Instantiate(btn);
+        GameObject itemListPanel = Instantiate(panel);
+        Button itemBtn = itemListPanel.GetComponentInChildren<Button>();
+        Image itemLock = itemListPanel.transform.Find("ItemLock").GetComponent<Image>();
 
         ItemInfo itemInfo = itemBtn.GetComponent<ItemInfo>();
+
         ItemInfo findItemInfo = itemDic.findDic[idx];
 
         itemInfo.index = idx;
@@ -89,23 +92,38 @@ public class ItemListManager : MonoBehaviour
         itemInfo.description = findItemInfo.description;
         itemInfo.imagePath = findItemInfo.imagePath;
 
-        itemBtn.transform.SetParent(tf);
+        itemListPanel.transform.SetParent(tf);
         itemBtn.GetComponent<Image>().sprite = Resources.Load<Sprite>(itemInfo.imagePath);
 
-        itemBtn.onClick.AddListener(() => ShowWindow(itemInfo));
+        if (DataController.GetInstance().itemOpenList.Contains(itemInfo.index))
+        {
+            itemLock.gameObject.SetActive(false);
+
+            ColorBlock btnColors = itemBtn.colors;
+
+            btnColors.normalColor = Color.white;
+            btnColors.highlightedColor = Color.white;
+            btnColors.pressedColor = Color.white;
+
+            itemBtn.colors = btnColors;
+
+            itemBtn.onClick.AddListener(() => ShowWindow(itemInfo));
+        }
     }
 
     public void ShowWindow(ItemInfo itemInfo)
     {
-        itemInfoWindow.gameObject.SetActive(true);
+        itemInfoPanel.SetActive(true);
 
-        ItemInfoWindow infoWindow = itemInfoWindow.GetComponent<ItemInfoWindow>();
+        ItemInfoWindow infoWindow = itemInfoPanel.transform.Find("ItemInfoWindow").GetComponent<ItemInfoWindow>();
+
+        infoWindow.gameObject.SetActive(true);
 
         infoWindow.itemImg.sprite = Resources.Load<Sprite>(itemInfo.imagePath);
         infoWindow.itemName.text = itemInfo.mtName;
         infoWindow.itemSort.text = itemInfo.group;
         infoWindow.itemGrade.text = itemInfo.grade;
-        infoWindow.itemCost.text = itemInfo.sellPrice.ToString();
+        infoWindow.itemCost.text = "판매 가격 : " + itemInfo.sellPrice.ToString();
         infoWindow.itemText.text = itemInfo.description;
     }
 }

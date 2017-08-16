@@ -23,6 +23,20 @@ public class ItemDictionary : MonoBehaviour
             m_item2 = item2;
         }
     }
+    
+    public struct SetItemInfo
+    {
+        public readonly int index1, index2, index3, index4, result;
+
+        public SetItemInfo(int _index1, int _index2, int _index3, int _index4, int _result)
+        {
+            index1 = _index1;
+            index2 = _index2;
+            index3 = _index3;
+            index4 = _index4;
+            result = _result;
+        }
+    }
 
     /// <summary>
     /// NOTE: 재료를 찾을 때 사용하는 Dictionary
@@ -37,6 +51,12 @@ public class ItemDictionary : MonoBehaviour
     /// <para>-> value(int) : material1에 해당하는 조합식 list</para>
     /// </summary>
     public Dictionary<Tuple<int, int>, List<int>> cbDic;
+
+    /// <summary>
+    /// NOTE: 세트 아이템 조합식을 저장하는 Dictionary
+    /// <para>-> key(int) : </para>
+    /// </summary>
+    [HideInInspector] public List<SetItemInfo> setItemList;
 
     public int starNum { get; private set; }
     public int materialNum { get; private set; }
@@ -69,8 +89,11 @@ public class ItemDictionary : MonoBehaviour
         findDic = new Dictionary<int, ItemInfo>();
         cbDic = new Dictionary<Tuple<int, int>, List<int>>();
 
+        setItemList = new List<SetItemInfo>();
+
         ReadDataFile("dataTable/combineTable", FILEINFO.COMBINETABLE);
         ReadDataFile("dataTable/itemTable", FILEINFO.ITEMTABLE);
+        ReadDataFile("dataTable/setItemTable", FILEINFO.SETITEMTABLE);
 
         SceneManager.LoadScene("Main");
     }
@@ -147,6 +170,10 @@ public class ItemDictionary : MonoBehaviour
 
                     break;
                 case FILEINFO.SETITEMTABLE:
+                    SetItemInfo setItemInfo = new SetItemInfo(Convert.ToInt32(wordList[0]), Convert.ToInt32(wordList[1]), Convert.ToInt32(wordList[2]), Convert.ToInt32(wordList[3]), Convert.ToInt32(wordList[4]));
+
+                    setItemList.Add(setItemInfo);
+
                     break;
                 default:
                     break;

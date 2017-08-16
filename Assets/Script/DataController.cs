@@ -39,7 +39,7 @@ public class DataController : MonoBehaviour
     /// NOTE: 열린 도감을 저장하는 Dictionary
     /// <para>-> key(int) : 도감이 열린 재료 index</para>
     /// </summary>
-    public List<int> itemOpenList;
+    [HideInInspector] public List<int> itemOpenList;
 
     private static DataController instance;
 
@@ -112,8 +112,10 @@ public class DataController : MonoBehaviour
     {
         m_leftTimer1 -= Time.deltaTime;
         PlayerPrefs.SetFloat("LeftTimer1", m_leftTimer1);
+
         m_leftTimer2 -= Time.deltaTime;
         PlayerPrefs.SetFloat("LeftTimer2", m_leftTimer2);
+
         m_leftTimer3 -= Time.deltaTime;
         PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
     }

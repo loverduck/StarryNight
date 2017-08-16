@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class ItemInfoWindow : MonoBehaviour
 {
+    public GameObject itemInfoPanel;
+
     public Image itemImg { get; set; }
     public Text itemName { get; set; }
     public Text itemSort { get; set; }
@@ -19,11 +21,13 @@ public class ItemInfoWindow : MonoBehaviour
         itemCost = GameObject.Find("ItemCost").GetComponent<Text>();
         itemText = GameObject.Find("ItemText").GetComponent<Text>();
 
+        itemInfoPanel.SetActive(false);
         gameObject.SetActive(false);
     }
 
     public void CloseWindow()
     {
         gameObject.SetActive(false);
+        itemInfoPanel.SetActive(false);
     }
 }
