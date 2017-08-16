@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CreateItem : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class CreateItem : MonoBehaviour
     public Button btn;
 
     private ItemDictionary itemDic;
+    
+    public Button combineButton;
 
     private void Awake()
     {
@@ -49,12 +52,24 @@ public class CreateItem : MonoBehaviour
 
         img_earthback.fillAmount = 0.0f; // 처음 버튼 게이지 0으로 -> 게이지 저장 가능 시 삭제해야함
 
+        List<SetItemInfo> tmpSetItemInfo = new List<SetItemInfo>();
+
         foreach (KeyValuePair<int, int> entry in DataController.GetInstance().haveDic)
         {
             // do something with entry.Value or entry.Key
             for (int i = 0; i < entry.Value; i++)
             {
                 GenerateItem(entry.Key, false);
+                
+                SetItemInfo setItemInfo = ItemDictionary.GetInstance().CheckSetItemCombine(entry.Key);
+
+                if (setItemInfo.result != 0 && !tmpSetItemInfo.Contains(setItemInfo))
+                {
+                    tmpSetItemInfo.Add(setItemInfo);
+
+                    combineButton.gameObject.SetActive(true);
+                    combineButton.onClick.AddListener(() => OnClick(setItemInfo));
+                }
             }
         }
 
@@ -170,5 +185,19 @@ public class CreateItem : MonoBehaviour
 
         newItem.GetComponent<BoxCollider2D>().isTrigger = false;
         newItem.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(itemDic.findDic[productID].imagePath);
+    }
+
+    void OnClick(SetItemInfo setItemInfo)
+    {
+        DataController dataController = DataController.GetInstance();
+
+        dataController.DeleteItem(setItemInfo.index1);
+        dataController.DeleteItem(setItemInfo.index2);
+        dataController.DeleteItem(setItemInfo.index3);
+        dataController.DeleteItem(setItemInfo.index4);
+
+        dataController.InsertItem(setItemInfo.result, 1);
+
+        SceneManager.LoadScene("Main");
     }
 }

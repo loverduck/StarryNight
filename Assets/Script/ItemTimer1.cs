@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ItemTimer1 : MonoBehaviour
 {
-
     public GameObject prefab;
     public Text timeDisplayer;
     public Image img;
     public Button btn;
     float cooltime = 1.0f;
     public bool disableOnStart = false;
-    private int sec;
-    private int sec_1;
-    private int sec_10;
-    private int min;
+    private int sec, sec_1, sec_10, min;
     private ItemDictionary itemDic;
+
+    public Button combineButton;
 
     private void Awake()
     {
@@ -27,6 +26,7 @@ public class ItemTimer1 : MonoBehaviour
     {
         if (img == null)
             img = gameObject.GetComponent<Image>();
+
         if (btn == null)
             btn = gameObject.GetComponent<Button>();
     }
@@ -46,13 +46,15 @@ public class ItemTimer1 : MonoBehaviour
             if (DataController.GetInstance().GetLeftTimer1() < 0)
             {
                 DataController.GetInstance().SetLeftTimer1(0);
+
                 if (btn)
                 {
                     btn.enabled = true;
                 }
-
             }
+
             float ratio = 1.0f - (DataController.GetInstance().GetLeftTimer1() / cooltime);
+
             if (img)
                 img.fillAmount = ratio;
         }
@@ -60,7 +62,9 @@ public class ItemTimer1 : MonoBehaviour
         {
             timeDisplayer.text = "0:00";
             img.fillAmount = 1.0f;
+
             DataController.GetInstance().SetLeftTimer1(0);
+
             if (btn)
             {
                 btn.enabled = true;
@@ -109,6 +113,14 @@ public class ItemTimer1 : MonoBehaviour
 
         DataController.GetInstance().InsertItem(productID, 1);
 
+        SetItemInfo setItemInfo = ItemDictionary.GetInstance().CheckSetItemCombine(productID);
+
+        if (setItemInfo.result != 0)
+        {
+            combineButton.gameObject.SetActive(true);
+            combineButton.onClick.AddListener(() => OnClick(setItemInfo));
+        }
+
         ItemInfo itemInfo = setItem.GetComponent<ItemInfo>();
         ItemInfo findItemInfo = itemDic.findDic[productID];
 
@@ -122,5 +134,19 @@ public class ItemTimer1 : MonoBehaviour
 
         setItem.GetComponent<BoxCollider2D>().isTrigger = false;
         setItem.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(itemDic.findDic[productID].imagePath);
+    }
+
+    void OnClick(SetItemInfo setItemInfo)
+    {
+        DataController dataController = DataController.GetInstance();
+
+        dataController.DeleteItem(setItemInfo.index1);
+        dataController.DeleteItem(setItemInfo.index2);
+        dataController.DeleteItem(setItemInfo.index3);
+        dataController.DeleteItem(setItemInfo.index4);
+
+        dataController.InsertItem(setItemInfo.result, 1);
+
+        SceneManager.LoadScene("Main");
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BlinkStar : MonoBehaviour
 {
@@ -174,6 +175,7 @@ public class BlinkStar : MonoBehaviour
                 }
 
                 DataController.GetInstance().InsertItem(currentQuest.reward, currentQuest.rewardCount);
+               
             }
 
             DataController.GetInstance().NextQuest();

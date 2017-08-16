@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ItemTimer2 : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class ItemTimer2 : MonoBehaviour
     private int sec_10;
     private int min;
     private ItemDictionary itemDic;
+
+    public Button combineButton;
 
     private void Awake()
     {
@@ -109,6 +112,14 @@ public class ItemTimer2 : MonoBehaviour
 
         DataController.GetInstance().InsertItem(productID, 1);
 
+        SetItemInfo setItemInfo = ItemDictionary.GetInstance().CheckSetItemCombine(productID);
+
+        if (setItemInfo.result != 0)
+        {
+            combineButton.gameObject.SetActive(true);
+            combineButton.onClick.AddListener(() => OnClick(setItemInfo));
+        }
+
         ItemInfo itemInfo = setItem.GetComponent<ItemInfo>();
         ItemInfo findItemInfo = itemDic.findDic[productID];
 
@@ -122,5 +133,19 @@ public class ItemTimer2 : MonoBehaviour
 
         setItem.GetComponent<BoxCollider2D>().isTrigger = false;
         setItem.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(itemDic.findDic[productID].imagePath);
+    }
+
+    void OnClick(SetItemInfo setItemInfo)
+    {
+        DataController dataController = DataController.GetInstance();
+
+        dataController.DeleteItem(setItemInfo.index1);
+        dataController.DeleteItem(setItemInfo.index2);
+        dataController.DeleteItem(setItemInfo.index3);
+        dataController.DeleteItem(setItemInfo.index4);
+
+        dataController.InsertItem(setItemInfo.result, 1);
+
+        SceneManager.LoadScene("Main");
     }
 }

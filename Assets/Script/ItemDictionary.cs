@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct SetItemInfo
+{
+    public readonly int index1, index2, index3, index4, result;
+
+    public SetItemInfo(int _index1, int _index2, int _index3, int _index4, int _result)
+    {
+        index1 = _index1;
+        index2 = _index2;
+        index3 = _index3;
+        index4 = _index4;
+        result = _result;
+    }
+}
+
 public class ItemDictionary : MonoBehaviour
 {
     enum FILEINFO
@@ -20,20 +34,6 @@ public class ItemDictionary : MonoBehaviour
         {
             m_item1 = item1;
             m_item2 = item2;
-        }
-    }
-    
-    public struct SetItemInfo
-    {
-        public readonly int index1, index2, index3, index4, result;
-
-        public SetItemInfo(int _index1, int _index2, int _index3, int _index4, int _result)
-        {
-            index1 = _index1;
-            index2 = _index2;
-            index3 = _index3;
-            index4 = _index4;
-            result = _result;
         }
     }
 
@@ -207,5 +207,71 @@ public class ItemDictionary : MonoBehaviour
         }
 
         return null;
+    }
+
+    public SetItemInfo CheckSetItemCombine(int key)
+    {
+        DataController dataController = DataController.GetInstance();
+        Dictionary<int, int> haveDic = dataController.haveDic;
+
+        foreach (SetItemInfo setItemInfo in setItemList)
+        {
+            if (key == setItemInfo.index1)
+            {
+                if (haveDic.ContainsKey(setItemInfo.index2) && haveDic[setItemInfo.index2] > 0 && haveDic.ContainsKey(setItemInfo.index3) && haveDic[setItemInfo.index3] > 0 && haveDic.ContainsKey(setItemInfo.index4) && haveDic[setItemInfo.index4] > 0)
+                {
+                    //dataController.DeleteItem(setItemInfo.index2);
+                    //dataController.DeleteItem(setItemInfo.index3);
+                    //dataController.DeleteItem(setItemInfo.index4);
+
+                    //dataController.InsertItem(setItemInfo.result, 1);
+
+                    //return true;
+
+                    return setItemInfo;
+                }
+            }
+            else if (key == setItemInfo.index2)
+            {
+                if (haveDic.ContainsKey(setItemInfo.index1) && haveDic[setItemInfo.index1] > 0 && haveDic.ContainsKey(setItemInfo.index3) && haveDic[setItemInfo.index3] > 0 && haveDic.ContainsKey(setItemInfo.index4) && haveDic[setItemInfo.index4] > 0)
+                {
+                    //dataController.DeleteItem(setItemInfo.index1);
+                    //dataController.DeleteItem(setItemInfo.index3);
+                    //dataController.DeleteItem(setItemInfo.index4);
+
+                    //dataController.InsertItem(setItemInfo.result, 1);
+
+                    return setItemInfo;
+                }
+            }
+            else if (key == setItemInfo.index3)
+            {
+                if (haveDic.ContainsKey(setItemInfo.index1) && haveDic[setItemInfo.index1] > 0 && haveDic.ContainsKey(setItemInfo.index2) && haveDic[setItemInfo.index2] > 0 && haveDic.ContainsKey(setItemInfo.index4) && haveDic[setItemInfo.index4] > 0)
+                {
+                    //dataController.DeleteItem(setItemInfo.index1);
+                    //dataController.DeleteItem(setItemInfo.index2);
+                    //dataController.DeleteItem(setItemInfo.index4);
+
+                    //dataController.InsertItem(setItemInfo.result, 1);
+
+                    return setItemInfo;
+                }
+            }
+            else if (key == setItemInfo.index4)
+            {
+                if (haveDic.ContainsKey(setItemInfo.index1) && haveDic[setItemInfo.index1] > 0 && haveDic.ContainsKey(setItemInfo.index2) && haveDic[setItemInfo.index2] > 0 && haveDic.ContainsKey(setItemInfo.index3) && haveDic[setItemInfo.index3] > 0)
+                {
+                    //dataController.DeleteItem(setItemInfo.index1);
+                    //dataController.DeleteItem(setItemInfo.index2);
+                    //dataController.DeleteItem(setItemInfo.index3);
+
+                    //dataController.InsertItem(setItemInfo.result, 1);
+
+                    return setItemInfo;
+                }
+            }
+        }
+
+        return new SetItemInfo(0, 0, 0, 0, 0);
     }
 }
