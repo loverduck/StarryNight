@@ -19,6 +19,8 @@ public class BlinkStar : MonoBehaviour
 
     private QuestInfo currentQuest;
 
+    private bool blinkAlive;
+
     private void Awake()
     {
         questDic = GameObject.FindWithTag("DataController").GetComponent<QuestDictionary>();
@@ -34,6 +36,8 @@ public class BlinkStar : MonoBehaviour
         btnColor_a.r = 255;
         btnColor_a.g = 255;
         btnColor_a.b = 255;
+
+        blinkAlive = true;
 
         LoadBtnInfo();
 
@@ -55,6 +59,26 @@ public class BlinkStar : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+
+        if (questIndex > DataController.GetInstance().GetQuestProcess())
+        {
+            btn.enabled = false;
+            btnImg.sprite = Resources.Load<Sprite>("questImg/quest_uncomplete");
+        }
+        else
+        {
+            btn.enabled = true;
+            btnImg.sprite = Resources.Load<Sprite>("questImg/quest_complete");
+
+            if (questIndex == DataController.GetInstance().GetQuestProcess())
+            {
+                btnImg.sprite = Resources.Load<Sprite>("questImg/quest_ongoing");
+            }
+        }
+    }
+
     private void LoadBtnInfo()
     {
         QuestInfo questInfo = btn.GetComponent<QuestInfo>();
@@ -72,6 +96,7 @@ public class BlinkStar : MonoBehaviour
 
     public void OnClick()
     {
+        AudioManager.GetInstance().QuestStarSound();
         currentQuest = questDic.FindQuest(DataController.GetInstance().GetQuestProcess());
 
         int checkItemIndex = currentQuest.termsItem;
@@ -89,7 +114,39 @@ public class BlinkStar : MonoBehaviour
         }
         else
         {
-            currentItemNum = DataController.GetInstance().GetItemNum(checkItemIndex);
+            if (currentQuest.index == 90101)
+            {
+                for (int i = 1001; i < 1004; i++)
+                {
+                    currentItemNum += DataController.GetInstance().GetItemNum(i);
+                }
+            }
+            else if (currentQuest.index == 90102)
+            {
+                for (int i = 1004; i < 1007; i++)
+                {
+                    currentItemNum += DataController.GetInstance().GetItemNum(i);
+                }
+            }
+            else if (currentQuest.index == 90103)
+            {
+                for (int i = 2001; i < 2007; i++)
+                {
+                    currentItemNum += DataController.GetInstance().GetItemNum(i);
+                }
+            }
+            else if (currentQuest.index == 90104)
+            {
+                for (int i = 3001; i < 3019; i++)
+                {
+                    currentItemNum += DataController.GetInstance().GetItemNum(i);
+                }
+            }
+            else
+            {
+                currentItemNum = DataController.GetInstance().GetItemNum(checkItemIndex);
+            }
+           
         }
 
         // 조건 아이템의 갯수 확인
@@ -120,6 +177,19 @@ public class BlinkStar : MonoBehaviour
             }
 
             DataController.GetInstance().NextQuest();
+            blinkAlive = false;
+
+            if (DataController.GetInstance().GetQuestProcess() < 90105)
+            {
+                
+                BlinkStar nextStar = GameObject.Find("Aris_" + DataController.GetInstance().GetQuestProcess()).GetComponent<BlinkStar>();
+                nextStar.BlingBling();                
+            }
+            else if (DataController.GetInstance().GetQuestProcess() > 90105 && DataController.GetInstance().GetQuestProcess() < 90124)
+            {
+                BlinkStar nextStar = GameObject.Find("Taurus_" + DataController.GetInstance().GetQuestProcess()).GetComponent<BlinkStar>();
+                nextStar.BlingBling();
+            }
         }
 
         // 퀘스트 정보 출력
@@ -182,7 +252,7 @@ public class BlinkStar : MonoBehaviour
         {
             int questItemNum = 0;
 
-            for (int i = 3001; i < 3007; i++)
+            for (int i = 3001; i < 3019; i++)
             {
                 questItemNum += DataController.GetInstance().GetItemNum(i);
             }
@@ -257,12 +327,17 @@ public class BlinkStar : MonoBehaviour
 
     IEnumerator Blink()
     {
-        while (true)
+        while (blinkAlive)
         {
             yield return new WaitForSeconds(0.5f);
             btnImg.color = btnColor_d;
             yield return new WaitForSeconds(0.5f);
             btnImg.color = btnColor_a;
         }
+    }
+
+    public void BlingBling()
+    {
+        StartCoroutine(Blink());
     }
 }

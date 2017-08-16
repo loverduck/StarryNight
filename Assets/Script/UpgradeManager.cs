@@ -84,10 +84,10 @@ public class UpgradeManager : MonoBehaviour
         int nextInvenValue = 10 + upgradeDic.findUpDic[50001].value[currentInvenLv];
         int nextClickValue = 2 + upgradeDic.findUpDic[50002].value[currentPerClickLv];
 
-        invenUp_Displayer.text = DataController.GetInstance().GetItemLimit() + "개 -> " + nextInvenValue + "개";
+        invenUp_Displayer.text = "인벤토리 +" + DataController.GetInstance().GetItemLimit() + " -> +" + nextInvenValue;
         invenUpCost_Displayer.text = upgradeDic.FindUpgrade(50001).cost[currentInvenLv] + "원";
 
-        energyPerClickUp_Displayer.text = DataController.GetInstance().GetEnergyPerClick() + " -> " + nextClickValue;
+        energyPerClickUp_Displayer.text = "클릭당 게이지 +" + DataController.GetInstance().GetEnergyPerClick() + " -> +" + nextClickValue;
         energyPerClickUpCost_Displayer.text = upgradeDic.FindUpgrade(50002).cost[currentPerClickLv] + "원";
     }
 

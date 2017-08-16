@@ -95,6 +95,7 @@ public class ItemTimer3 : MonoBehaviour
             }
 
             CreateSetItem(id);
+            AudioManager.GetInstance().ItemSound();
 
             DataController.GetInstance().SetLeftTimer3(cooltime);
             btn.enabled = false;
@@ -105,7 +106,7 @@ public class ItemTimer3 : MonoBehaviour
 
     private void CreateSetItem(int productID)
     {
-        GameObject setItem = Instantiate(prefab, new Vector3(-580, 772, -3), Quaternion.identity);
+        GameObject setItem = Instantiate(prefab, new Vector3(-480, 772, -3), Quaternion.identity);
 
         DataController.GetInstance().InsertItem(productID, 1);
 
