@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class ItemTimer1 : MonoBehaviour
 {
     public GameObject prefab;
-    public Text timeDisplayer;
+    public Text timeDisplayer; // 남은 시간 표시
     public Image img;
     public Button btn;
-    float cooltime = 300.0f;
+    float cooltime = 300.0f; // 쿨타임 -> 타이머 쿨타임 업그레이드 추가 시 datacontroller에서 가져오는 걸로 수정필요. itemtimer2,3도 마찬가지
     public bool disableOnStart = false;
     private int sec, sec_1, sec_10, min;
     private ItemDictionary itemDic;
@@ -31,7 +31,7 @@ public class ItemTimer1 : MonoBehaviour
             btn = gameObject.GetComponent<Button>();
     }
 
-    // Update is called once per frame
+    // 시간당 게이지 채우기, 남은 시간 표시
     void Update()
     {
         if (DataController.GetInstance().GetLeftTimer1() > 0)
@@ -72,6 +72,7 @@ public class ItemTimer1 : MonoBehaviour
         }
     }
 
+    // 쿨타임 시간 지났는지 확인
     public bool CheckCooltime()
     {
         if (DataController.GetInstance().GetLeftTimer1() > 0)
@@ -82,7 +83,7 @@ public class ItemTimer1 : MonoBehaviour
 
     public void ResetCooltime()
     {
-        if (btn)
+        if (btn) // 버튼 활성화 시
         {
             if (DataController.GetInstance().GetItemCount() >= DataController.GetInstance().GetItemLimit()) // 아이템 갯수 제한
             {
@@ -90,6 +91,7 @@ public class ItemTimer1 : MonoBehaviour
                 return;
             }
 
+            // 세트 아이템 랜덤 생성
             int id = Random.Range(4001, 4059);
 
             while (id % 5 == 0)

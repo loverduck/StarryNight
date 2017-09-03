@@ -10,7 +10,7 @@ public class CreateItem : MonoBehaviour
     private int energyPerClick; // 클릭당 에너지 증가량
     private int energyMaxValue = 100; // 에너지 충전 최대량
     public GameObject item; // 아이템
-    public Image img_earthback;
+    public Image img_earthback; // 게이지 이미지
     public Button btn;
 
     private ItemDictionary itemDic;
@@ -114,7 +114,7 @@ public class CreateItem : MonoBehaviour
         yield return null;
     }
 
-    // item1maker 클릭 시
+    // 게이지 클릭
     public void OnClick()
     {
         AudioManager.GetInstance().ClickSound();

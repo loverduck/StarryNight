@@ -15,12 +15,14 @@ public class ButtonManager : MonoBehaviour {
         SceneManager.LoadScene("Main");
     }
 
+    //양자리 퀘스트 버튼
     public void OnArisBtnClick()
     {
         AudioManager.GetInstance().ActSound();
         SceneManager.LoadScene("Aris");
     }
 
+    // 황소자리 퀘스트 버튼
     public void OnTaurusBtnClick()
     {
 

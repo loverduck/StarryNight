@@ -12,12 +12,14 @@ public class OptionPopup : MonoBehaviour {
         option.SetActive(false);
     }
 
+    // 설정 팝업 띄우기
     public void EnterOption()
     {
         AudioManager.GetInstance().OptionSound();
         option.SetActive(true);
     }
 
+    // 설정 팝업 닫기
     public void ExitOption()
     {
         option.SetActive(false);

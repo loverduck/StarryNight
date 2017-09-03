@@ -13,6 +13,7 @@ public class Voice : MonoBehaviour
         StartCoroutine(WaitVoice());
     }
 
+    // 대사 간 간격 시간 설정
     IEnumerator WaitVoice()
     {
         character.enabled = false;

@@ -45,11 +45,13 @@ public class SwitchSunMoon : MonoBehaviour {
 
     }
 
+    // 현재 스위치 상태 가져오기
     public int GetState()
     {
         return state;
     }
 
+    // 버튼 스위치
     public void CheckButton()
     {
         if (state == 1) // 1이 sun 2가 moon

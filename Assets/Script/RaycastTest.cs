@@ -31,6 +31,7 @@ public class RaycastTest : MonoBehaviour
         //CameraController.focusOnItem = false;
         //Debug.Log("focusOnItem : " + CameraController.focusOnItem);
 
+        // 아이템이 인벤토리 밖으로 벗어날 경우 아이템 드래그 전 위치로 다시 이동
         if (Input.mousePosition.x > 7 * Screen.width / 8 || Input.mousePosition.x < Screen.width / 8 || Input.mousePosition.y > 7 * Screen.height / 8 || Input.mousePosition.y < Screen.height / 3)
             transform.position = Camera.main.ScreenToWorldPoint(start);
     }

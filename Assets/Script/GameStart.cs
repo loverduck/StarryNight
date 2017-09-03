@@ -10,6 +10,7 @@ public class GameStart : MonoBehaviour {
     public Button start;
     public Text loading;
 
+    
     private void Awake()
     {
         Color textColor = new Vector4(1, 1, 1, 0);
@@ -22,6 +23,7 @@ public class GameStart : MonoBehaviour {
         StartCoroutine(FadeOut());
     }
 
+    // 로딩 완료 시 start 버튼 띄우기
     IEnumerator FadeOut()
     {
         for (float i = 0f; i <= 1; i += 0.1f)
@@ -47,6 +49,7 @@ public class GameStart : MonoBehaviour {
         loading.enabled = true;
     }
 
+    // start 클릭 시 메인화면 이동
     public void Click()
     {
         SceneManager.LoadScene("Main");

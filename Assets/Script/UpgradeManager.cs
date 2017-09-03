@@ -7,6 +7,7 @@ public class UpgradeManager : MonoBehaviour
 {
     private UpgradeDictionary upgradeDic;
 
+    // 업그레이드 잠금 표시
     private GameObject invenUnlock;
     private GameObject perClickUnlock;
 
@@ -17,7 +18,9 @@ public class UpgradeManager : MonoBehaviour
     private Button invenUpBtn;
     private Button energyPerClickUpBtn;
 
+    //현재 인벤토리 레벨
     private int currentInvenLv;
+    // 현재 클릭당 게이지 레벨
     private int currentPerClickLv;
 
     private void Awake()
@@ -40,7 +43,7 @@ public class UpgradeManager : MonoBehaviour
         currentInvenLv = DataController.GetInstance().GetInvenLv();
         currentPerClickLv = DataController.GetInstance().GetEnergyPerClickLv();
 
-        // 인벤 업그레이드 버튼 설정
+        // 인벤 업그레이드 text 및 버튼 설정
         if (currentInvenLv >= DataController.GetInstance().GetMaxInvenLv())
         {
             invenUpBtn.enabled = false;
@@ -56,6 +59,7 @@ public class UpgradeManager : MonoBehaviour
         }
         else
         {
+            // 업그레이드 비용이 충분한지 확인
             if (DataController.GetInstance().GetGold() < (ulong)upgradeDic.FindUpgrade(50001).cost[currentInvenLv])
             {
                 invenUpBtn.enabled = false;
@@ -68,7 +72,7 @@ public class UpgradeManager : MonoBehaviour
             }
         }
 
-        // 클릭 당 게이지 업그레이드 버튼 설정
+        // 클릭 당 게이지 업그레이드 text 및 버튼 설정
         if (currentPerClickLv >= DataController.GetInstance().GetMaxPerClickLv())
         {
             energyPerClickUpBtn.enabled = false;
@@ -83,6 +87,7 @@ public class UpgradeManager : MonoBehaviour
         }
         else
         {
+            // 업그레이드 비용이 충분한지 확인
             if (DataController.GetInstance().GetGold() < (ulong)upgradeDic.FindUpgrade(50002).cost[currentPerClickLv])
             {
                 energyPerClickUpBtn.enabled = false;
@@ -122,6 +127,7 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
+    // 인벤토리 업그레이드
     public void InvenUpgrade()
     {
         // 골드 빼고
@@ -131,6 +137,7 @@ public class UpgradeManager : MonoBehaviour
         DataController.GetInstance().UpgradeInvenLv();
     }
 
+    // 클릭당 게이지 업그레이드
     public void EnergyPerClickUpgrade()
     {
         // 골드 빼고

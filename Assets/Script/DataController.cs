@@ -9,11 +9,13 @@ public class DataController : MonoBehaviour
     // 현재 보유 골드량
     private ulong m_gold;
 
+    // 로딩 유무
     private bool loadingFinish;
 
     // 현재 보유 아이템 개수, 퀘스트 진행도(인덱스)
     private int m_itemcount, m_questProcess, m_energy;
 
+    // 아이템 타이머 시간
     private float m_leftTimer1, m_leftTimer2, m_leftTimer3;
 
     // 현재 인벤토리 레벨, 클릭 게이지 레벨
@@ -105,9 +107,11 @@ public class DataController : MonoBehaviour
 
     void Start()
     {
+        // 종료 후 실행 시간 계산
         m_leftTimer1 -= TimeAfterLastPlay;
         m_leftTimer2 -= TimeAfterLastPlay;
         m_leftTimer3 -= TimeAfterLastPlay;
+
 
         InvokeRepeating("UpdateLastPlayDate", 0f, 5f);
 
@@ -170,6 +174,7 @@ public class DataController : MonoBehaviour
         return mStream.ToArray();
     }
 
+    // 플레이 종료 시간 가져오기
     DateTime GetLastPlayDate()
     {
         if (!PlayerPrefs.HasKey("Time"))
@@ -183,16 +188,19 @@ public class DataController : MonoBehaviour
         return DateTime.FromBinary(timeBinaryInLong);
     }
 
+    // 플레이 종료 시간 저장
     void UpdateLastPlayDate()
     {
         PlayerPrefs.SetString("Time", DateTime.Now.ToBinary().ToString());
     }
 
+    // 어플 종료 시 플레이 시간 저장
     private void OnApplicationQuit()
     {
         UpdateLastPlayDate();
     }
 
+    // 종료 후 지난 시간 계산
     public int TimeAfterLastPlay
     {
         get
@@ -205,11 +213,13 @@ public class DataController : MonoBehaviour
         }
     }
 
+    // 로딩 상태 가져오기
     public bool GetloadingFinish()
     {
         return loadingFinish;
     }
 
+    // 로딩 상태 설정하게
     public void SetloadingFinish(bool finish)
     {
         loadingFinish = finish;
@@ -281,22 +291,26 @@ public class DataController : MonoBehaviour
         }
     }
 
+    // 인벤토리 레벨 가져오기
     public int GetInvenLv()
     {
         return invenLv;
     }
 
+    // 인벤토리 레벨 업그레이드
     public void UpgradeInvenLv()
     {
         invenLv += 1;
         PlayerPrefs.SetInt("InvenLevel", invenLv);
     }
 
+    // 에너지량 가져오기
     public int GetEnergy()
     {
         return m_energy;
     }
 
+    // 에너지량 설정
     public void SetEnergy(int energy)
     {
         m_energy = energy;
@@ -312,11 +326,18 @@ public class DataController : MonoBehaviour
         return 2 + 2 * energyPerClickLv;
     }
 
+    /// <summary>
+    /// 클릭 당 게이지 레벨 가져오기
+    /// </summary>
+    /// <returns></returns>
     public int GetEnergyPerClickLv()
     {
         return energyPerClickLv;
     }
 
+    /// <summary>
+    /// 클릭 당 게이지 레벨 업그레이드
+    /// </summary>
     public void UpgradeEnergyPerClickLv()
     {
         energyPerClickLv += 1;
@@ -440,22 +461,38 @@ public class DataController : MonoBehaviour
         PlayerPrefs.SetFloat("LeftTimer3", m_leftTimer3);
     }
 
+    /// <summary>
+    /// 최대 업그레이드 가능한 인벤토리 레벨 가져오기
+    /// </summary>
+    /// <returns></returns>
     public int GetMaxInvenLv()
     {
         return invenMaxLv;
     }
 
+    /// <summary>
+    /// 최대 업그레이드 가능한 인벤토리 레벨 설정
+    /// </summary>
+    /// <param name="num">최대 레벨</param>
     public void SetMaxInvenLv(int num)
     {
         invenMaxLv = num;
         PlayerPrefs.SetInt("InvenMaxLevel", invenMaxLv);
     }
 
+    /// <summary>
+    /// 최대 업그레이드 가능한 클릭당 에너지 레벨 가져오기
+    /// </summary>
+    /// <returns></returns>
     public int GetMaxPerClickLv()
     {
         return energyPerClickMaxLv;
     }
 
+    /// <summary>
+    /// 최대 업그레이드 가능한 클릭당 에너지 레벨 설정
+    /// </summary>
+    /// <param name="num">최대 레벨</param>
     public void SetMaxPerClickLv(int num)
     {
         energyPerClickMaxLv = num;
